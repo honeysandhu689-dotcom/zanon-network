@@ -3,51 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zanon Network (Ž) | The Bitcoin Killer</title>
+    <title>ZANON NETWORK (Ž) | The Bitcoin Killer</title>
     <style>
-        body { 
-            background: radial-gradient(circle, #0a1128 0%, #000000 100%); 
-            color: #ffffff; 
-            text-align: center; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0; padding: 0;
-        }
-        .container { max-width: 900px; margin: auto; padding: 50px 20px; }
+        body { background: radial-gradient(circle, #001a1a 0%, #000 100%); color: #fff; text-align: center; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; }
+        .hero { padding: 60px 20px; }
+        h1 { color: #00f2ff; font-size: 38px; letter-spacing: 6px; text-shadow: 0 0 20px #00f2ff; margin-bottom: 10px; }
+        .tagline { color: #ff00ff; font-weight: bold; letter-spacing: 2px; margin-bottom: 40px; }
         
-        /* Neon Header */
-        h1 { font-size: 3.5em; color: #00f2ff; letter-spacing: 10px; text-shadow: 0 0 30px #00f2ff; margin-bottom: 5px; }
-        .tagline { color: #ff00ff; font-weight: bold; letter-spacing: 2px; margin-bottom: 40px; text-transform: uppercase; }
-
-        /* Rotating Zanon Coin */
-        .coin-box { margin: 60px auto; perspective: 1000px; }
+        /* Coin Animation */
+        .coin-container { margin: 40px auto; }
         .coin { 
-            width: 320px; height: auto;
-            animation: rotateCoin 5s linear infinite;
-            filter: drop-shadow(0 0 40px rgba(0, 242, 255, 0.8));
+            width: 300px; height: auto; 
+            animation: spin 7s linear infinite; 
+            filter: drop-shadow(0 0 30px #00f2ff);
             border-radius: 50%;
         }
-        @keyframes rotateCoin {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
+        @keyframes spin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
 
-        /* Power Stats */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
-        .stat-card { background: rgba(0, 242, 255, 0.1); border: 1px solid #00f2ff; padding: 20px; border-radius: 15px; }
-        .stat-card h3 { color: #00f2ff; margin: 0; font-size: 1.2em; }
-        .stat-card p { margin: 10px 0 0; font-size: 0.9em; color: #ccc; }
+        /* Powerful Features Box */
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 20px; max-width: 800px; margin: auto; }
+        .feature-box { background: rgba(0, 242, 255, 0.05); border: 1px solid #00f2ff; padding: 25px; border-radius: 20px; text-align: left; backdrop-filter: blur(5px); }
+        h2 { color: #00f2ff; font-size: 24px; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        p { line-height: 1.6; color: #ccc; font-size: 17px; }
+        .highlight { color: #00ff88; font-weight: bold; }
 
-        /* Description Sections */
-        .info-box { 
-            background: rgba(255, 255, 255, 0.03); 
-            padding: 40px; border-radius: 25px; 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 40px; text-align: left;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        h2 { color: #00f2ff; font-size: 1.8em; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        p { line-height: 1.8; color: #ddd; font-size: 1.1em; }
+        /* Wallet & Call to Action */
+        .wallet-section { background: #001a1a; border: 2px dashed #00f2ff; padding: 30px; margin: 40px 20px; border-radius: 15px; box-shadow: 0 0 30px rgba(0, 242, 255, 0.2); }
+        code { display: block; word-break: break-all; color: #00ff88; background: #000; padding: 15px; margin-top: 15px; border-radius: 8px; font-size: 18px; border: 1px solid #333; }
+        
+        .footer { color: #444; font-size: 12px; padding: 40px 0; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
 
-        /* Address Highlight */
-        .wallet-zone { 
-            background: linear-gradient(90deg, #001a1a 0%,
+    <div class="hero">
+        <h1>ZANON NETWORK</h1>
+        <p class="tagline">"LEAVING ALL OTHERS BEHIND"</p>
+
+        <div class="coin-container">
+            <img src="1772480639212.png" class="coin" alt="Zanon Coin">
+        </div>
+    </div>
+
+    <div class="info-grid">
+        <div class="feature-box">
+            <h2>💎 The Bitcoin Killer</h2>
+            <p>Bitcoin was just the start. <span class="highlight">Zanon (Ž)</span> is the evolution. With a vision to hit the same heights as BTC, Zanon is built for the next generation of wealth creators.</p>
+        </div>
+
+        <div class="feature-box">
+            <h2>⚡ Solana Speed & Decentralization</h2>
+            <p>Powered by the <span class="highlight">Solana Blockchain</span>, Zanon delivers over 65,000 transactions per second. It is 100% decentralized, secure, and built to bypass the limits of traditional banking.</p>
+        </div>
+    </div>
+
+    <div class="wallet-section">
+        <p style="color: #00f2ff; font-weight: bold; font-size: 1.2em; margin: 0;">OFFICIAL PRE-LAUNCH DEPOSIT ADDRESS (SOL)</p>
+        <code>A3paaCBsJmnK6uB2bXs4jAYEwXs9WJarh7mShnu62TdP</code>
+        <p style="font-size: 14px; color: #aaa; margin-top: 15px;">Participate in the revolution. Join Zanon Network today.</p>
+    </div>
+
+    <div class="footer">
+        © 2026 ZANON NETWORK. THE FUTURE IS DECENTRALIZED.
+    </div>
+
+</body>
+</html>
