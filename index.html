@@ -3,68 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zanon Network (Ž) | Live Mining Status</title>
+    <title>Zanon Network (Ž) | Official Bitcoin Protocol on Solana</title>
     <style>
-        body { background: radial-gradient(circle, #001a1a 0%, #000 100%); color: #fff; text-align: center; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; }
+        body { background: radial-gradient(circle, #001a1a 0%, #000 100%); color: #fff; text-align: center; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; scroll-behavior: smooth; }
         
-        /* Mining Tracker Box */
-        .mining-container { background: rgba(0, 242, 255, 0.1); border: 2px solid #00f2ff; padding: 20px; margin: 20px; border-radius: 15px; box-shadow: 0 0 20px #00f2ff; }
-        .mining-title { color: #00ff88; font-weight: bold; font-size: 1.2em; text-transform: uppercase; margin-bottom: 10px; }
-        #coinCount { font-size: 2.5em; color: #fff; text-shadow: 0 0 10px #fff; font-family: monospace; }
-        .live-dot { height: 10px; width: 10px; background-color: #ff0000; border-radius: 50%; display: inline-block; animation: blink 1s infinite; margin-right: 10px; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
-
-        /* Rotating Coin */
-        .coin-box { margin: 30px auto; }
-        .coin { width: 250px; height: auto; animation: spin 8s linear infinite; filter: drop-shadow(0 0 30px #00f2ff); border-radius: 50%; }
-        @keyframes spin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
-
-        /* Buttons */
-        .trade-zone { margin: 30px 0; display: flex; justify-content: center; gap: 20px; }
-        .btn { padding: 15px 30px; font-weight: bold; border-radius: 50px; text-decoration: none; border: none; cursor: pointer; }
-        .buy-btn { background: #00ff88; color: #000; }
-        .sell-btn { background: #ff4b2b; color: #fff; }
-
-        .wallet-card { background: #001a1a; border: 1px dashed #00f2ff; padding: 20px; margin: 20px; border-radius: 10px; }
-        code { display: block; word-break: break-all; color: #00ff88; background: #000; padding: 10px; margin-top: 10px; }
-    </style>
-</head>
-<body>
-
-    <div style="padding: 20px;">
-        <h1 style="color: #00f2ff; letter-spacing: 5px;">ZANON NETWORK</h1>
+        /* Layout Containers */
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
         
-        <div class="mining-container">
-            <div class="mining-title"><span class="live-dot"></span>LIVE ZANON (Ž) MINED</div>
-            <div id="coinCount">1,245,670</div>
-            <p style="color: #aaa; margin-top: 5px;">Current Supply Progress: 64%</p>
-        </div>
+        /* Header */
+        header { padding: 40px 0; }
+        h1 { color: #00f2ff; letter-spacing: 8px; font-size: 3rem; text-shadow: 0 0 20px #00f2ff; margin: 0; }
+        .tagline { color: #ff00ff; font-weight: bold; letter-spacing: 2px; margin-top: 10px; }
 
-        <div class="coin-box">
-            <img src="1772480639212.png" class="coin" alt="Zanon Coin">
-        </div>
-
-        <div class="trade-zone">
-            <a href="#" class="btn buy-btn">BUY Ž COIN</a>
-            <a href="#" class="btn sell-btn">SELL Ž COIN</a>
-        </div>
-
-        <div class="wallet-card">
-            <p style="color: #00f2ff; font-weight: bold;">OFFICIAL SOLANA WALLET</p>
-            <code>A3paaCBsJmnK6uB2bXs4jAYEwXs9WJarh7mShnu62TdP</code>
-        </div>
-    </div>
-
-    <script>
-        let count = 1245670; // यहाँ से गिनती शुरू होगी
-        const counterElement = document.getElementById('coinCount');
-
-        setInterval(() => {
-            let increment = Math.floor(Math.random() * 5) + 1; // हर बार 1 से 5 कॉइन बढ़ेंगे
-            count += increment;
-            counterElement.innerText = count.toLocaleString() + " Ž";
-        }, 2000); // हर 2 सेकंड में अपडेट होगा
-    </script>
-
-</body>
-</html>
+        /* Mining Tracker Box (Latest Version) */
+        .mining-container { background: rgba(0, 242, 255, 0.05); border: 2px solid #00f2ff; padding: 25px; margin: 30px auto; border-radius: 20px; box-shadow: 0 0 30px rgba(0, 242, 255, 0.2); position: relative; max-width: 500px; }
+        .mining-title { color: #00ff88; font-weight: bold; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; }
+        .live-dot { height: 12px; width: 12px; background-color: #ff0000; border-radius: 50%; display: inline-block; animation: blink 1s infinite; margin-right: 12px; box-shadow: 0 0 10px #ff0000; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        
+        #coinCount { font-size: 3rem; color: #fff; text-shadow: 0 0 15px #fff; font-family: 'Courier New', monospace; font-weight: bold; margin: 10px 0; }
+        .
