@@ -3,12 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zanon Network (Ž) - Official Site</title>
+    <title>Zanon Network (Ž) - Official</title>
     <style>
-        body { background: radial-gradient(circle, #001a1a 0%, #000 100%); color: #fff; text-align: center; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        body { background: radial-gradient(circle, #001a1a 0%, #000 100%); color: #fff; text-align: center; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        
+        /* HEADER SECTION */
         .header { padding: 40px 20px; }
-        h1 { color: #00f2ff; font-size: 3rem; letter-spacing: 8px; text-shadow: 0 0 15px #00f2ff; margin-bottom: 5px; }
-        .tagline { color: #ff00ff; font-weight: bold; font-size: 1.2rem; }
+        h1 { color: #00f2ff; font-size: 3rem; letter-spacing: 8px; text-shadow: 0 0 15px #00f2ff; margin: 0; }
+        .tagline { color: #ff00ff; font-weight: bold; font-size: 1.1rem; margin-top: 5px; }
 
-        /* LIVE MINING & STATUS BOX */
-        .status-container { background: rgba(0, 0, 0, 0.7); border: 2px solid #00f2ff; padding: 25px; margin: 20px auto; max-width: 500px; border-radius: 20px; box-shadow: 0
+        /* LIVE MINING BOX */
+        .status-container { background: rgba(0, 0, 0, 0.8); border: 2px solid #00f2ff; padding: 20px; margin: 20px auto; max-width: 450px; border-radius: 20px; box-shadow: 0 0 30px rgba(0, 242, 255, 0.2); position: relative; }
+        .live-label { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #ff0000; padding: 2px 15px; border-radius: 10px; font-size: 10px; font-weight: bold; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        #mining-total { font-size: 2.5rem; color: #00ff88; font-family: monospace; margin: 10px 0; }
+        .progress-bar { background: #111; border-radius: 50px; height: 10px; width: 80%; margin: 10px auto; overflow: hidden; border: 1px solid #333; }
+        #progress-fill { background: linear-gradient(90deg, #00f2ff, #00ff88); height: 100%; width: 22%; }
+
+        /* 3D COIN SECTION (1772480639212.png) */
+        .coin-box { margin: 30px auto; perspective: 1000px; }
+        .coin { width: 200px; height: auto; animation: spin 6s linear infinite; filter: drop-shadow(0 0 20px #00f2ff); }
+        @keyframes spin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+
+        /* BUY / SELL BUTTONS */
+        .btn-zone { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+        .btn { padding: 12px 30px; border-radius:
