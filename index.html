@@ -6,66 +6,60 @@
     <title>ZANON NETWORK (Ž) | The Bitcoin Killer</title>
     <style>
         body { background: radial-gradient(circle, #001a1a 0%, #000 100%); color: #fff; text-align: center; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; }
-        .hero { padding: 60px 20px; }
-        h1 { color: #00f2ff; font-size: 38px; letter-spacing: 6px; text-shadow: 0 0 20px #00f2ff; margin-bottom: 10px; }
-        .tagline { color: #ff00ff; font-weight: bold; letter-spacing: 2px; margin-bottom: 40px; }
+        .hero { padding: 40px 20px; }
+        h1 { color: #00f2ff; font-size: 38px; letter-spacing: 5px; text-shadow: 0 0 20px #00f2ff; margin: 10px 0; }
+        .tagline { color: #ff00ff; font-weight: bold; text-transform: uppercase; margin-bottom: 30px; }
         
-        /* Coin Animation */
-        .coin-container { margin: 40px auto; }
-        .coin { 
-            width: 300px; height: auto; 
-            animation: spin 7s linear infinite; 
-            filter: drop-shadow(0 0 30px #00f2ff);
-            border-radius: 50%;
-        }
+        /* Rotating Coin */
+        .coin-box { margin: 30px auto; }
+        .coin { width: 280px; height: auto; animation: spin 8s linear infinite; filter: drop-shadow(0 0 30px #00f2ff); border-radius: 50%; }
         @keyframes spin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
 
-        /* Powerful Features Box */
-        .info-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 20px; max-width: 800px; margin: auto; }
-        .feature-box { background: rgba(0, 242, 255, 0.05); border: 1px solid #00f2ff; padding: 25px; border-radius: 20px; text-align: left; backdrop-filter: blur(5px); }
-        h2 { color: #00f2ff; font-size: 24px; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        p { line-height: 1.6; color: #ccc; font-size: 17px; }
-        .highlight { color: #00ff88; font-weight: bold; }
+        /* Action Buttons (Buy/Sell) */
+        .trade-zone { margin: 40px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .btn { padding: 15px 40px; font-size: 18px; font-weight: bold; border-radius: 50px; text-decoration: none; transition: 0.3s; cursor: pointer; border: none; }
+        .buy-btn { background: #00ff88; color: #000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
+        .sell-btn { background: #ff4b2b; color: #fff; box-shadow: 0 0 20px rgba(255, 75, 43, 0.5); }
+        .btn:hover { transform: scale(1.1); filter: brightness(1.2); }
 
-        /* Wallet & Call to Action */
-        .wallet-section { background: #001a1a; border: 2px dashed #00f2ff; padding: 30px; margin: 40px 20px; border-radius: 15px; box-shadow: 0 0 30px rgba(0, 242, 255, 0.2); }
+        /* Powerful Features */
+        .info-card { background: rgba(0, 242, 255, 0.05); border: 1px solid #00f2ff; padding: 25px; border-radius: 20px; max-width: 800px; margin: 20px auto; text-align: left; }
+        h2 { color: #00f2ff; font-size: 22px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        p { line-height: 1.6; color: #ccc; font-size: 16px; }
+
+        /* Wallet Section */
+        .wallet-card { background: #001a1a; border: 2px dashed #00f2ff; padding: 25px; margin: 30px 20px; border-radius: 15px; }
         code { display: block; word-break: break-all; color: #00ff88; background: #000; padding: 15px; margin-top: 15px; border-radius: 8px; font-size: 18px; border: 1px solid #333; }
-        
-        .footer { color: #444; font-size: 12px; padding: 40px 0; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
     <div class="hero">
         <h1>ZANON NETWORK</h1>
-        <p class="tagline">"LEAVING ALL OTHERS BEHIND"</p>
+        <p class="tagline">"Leaving All Others Behind"</p>
 
-        <div class="coin-container">
+        <div class="coin-box">
             <img src="1772480639212.png" class="coin" alt="Zanon Coin">
         </div>
     </div>
 
-    <div class="info-grid">
-        <div class="feature-box">
-            <h2>💎 The Bitcoin Killer</h2>
-            <p>Bitcoin was just the start. <span class="highlight">Zanon (Ž)</span> is the evolution. With a vision to hit the same heights as BTC, Zanon is built for the next generation of wealth creators.</p>
-        </div>
-
-        <div class="feature-box">
-            <h2>⚡ Solana Speed & Decentralization</h2>
-            <p>Powered by the <span class="highlight">Solana Blockchain</span>, Zanon delivers over 65,000 transactions per second. It is 100% decentralized, secure, and built to bypass the limits of traditional banking.</p>
-        </div>
+    <div class="trade-zone">
+        <a href="#" class="btn buy-btn">BUY ZANON (Ž)</a>
+        <a href="#" class="btn sell-btn">SELL ZANON (Ž)</a>
     </div>
 
-    <div class="wallet-section">
-        <p style="color: #00f2ff; font-weight: bold; font-size: 1.2em; margin: 0;">OFFICIAL PRE-LAUNCH DEPOSIT ADDRESS (SOL)</p>
+    <div class="info-card">
+        <h2>🚀 The Bitcoin Killer (Solana Chain)</h2>
+        <p>Zanon Network is 100% decentralized and built on the lightning-fast **Solana Blockchain**. With speeds exceeding 65,000 TPS, Zanon is designed to hit the moon and beyond. Bitcoin was the prototype; Zanon is the final product.</p>
+    </div>
+
+    <div class="wallet-card">
+        <p style="color: #00f2ff; font-weight: bold; margin: 0;">OFFICIAL PRE-LAUNCH WALLET ADDRESS (SOL)</p>
         <code>A3paaCBsJmnK6uB2bXs4jAYEwXs9WJarh7mShnu62TdP</code>
-        <p style="font-size: 14px; color: #aaa; margin-top: 15px;">Participate in the revolution. Join Zanon Network today.</p>
+        <p style="font-size: 14px; color: #aaa; margin-top: 15px;">Send SOL to join the Zanon Revolution early.</p>
     </div>
 
-    <div class="footer">
-        © 2026 ZANON NETWORK. THE FUTURE IS DECENTRALIZED.
-    </div>
+    <div style="color: #444; font-size: 12px; padding: 30px 0;">© 2026 ZANON NETWORK. ALL RIGHTS RESERVED.</div>
 
 </body>
 </html>
