@@ -144,6 +144,40 @@ left:0;
 z-index:-2;
 }
 
+#ai-input {
+margin-top:8px;
+width:100%;
+padding:6px;
+background:#222;
+color:white;
+border:1px solid #444;
+border-radius:5px;
+}
+
+#ai-messages {
+max-height:180px;
+overflow-y:auto;
+margin-bottom:8px;
+font-size:13px;
+}
+
+.ai-message {
+margin:6px 0;
+padding:6px 8px;
+border-radius:6px;
+}
+
+.ai-message.user {
+background:#14F195;
+color:black;
+text-align:right;
+}
+
+.ai-message.bot {
+background:#222;
+color:#eee;
+}
+
 </style>
 
 </head>
@@ -152,20 +186,29 @@ z-index:-2;
 
 <canvas id="galaxy"></canvas>
 
-<audio autoplay loop controls muted>
-<source src="https://cdn.pixabay.com/download/audio/2023/03/28/audio_5e5c9b1d29.mp3?filename=deep-space-ambient-141714.mp3">
-</audio>
+<!-- Background Music - Invisible YouTube iframe, src empty initially -->
+<iframe 
+  id="bg-music"
+  width="0" 
+  height="0"
+  src=""
+  frameborder="0"
+  allow="autoplay; encrypted-media"
+  allowfullscreen
+  style="position: absolute; top: -9999px; left: -9999px;">
+</iframe>
 
 <!-- AI GUIDE -->
 
 <div id="ai-chat">
 
-<div id="ai-title">🤖 Zanon AI Guide</div>
+<div id="ai-title">🤖 Honey's AI Assistant</div>
 
-<div id="ai-text">
-Welcome to the Zanon website.  
-$ZNN is a Solana meme token built for community and fast blockchain transactions.
+<div id="ai-messages">
+<div class="ai-message bot">Welcome to Zanon, Honey! 🚀 I'm your personal AI. Ask about $ZNN, chart, pump.fun, transactions, whales or anything here.</div>
 </div>
+
+<input id="ai-input" type="text" placeholder="Ask me..." onkeypress="if(event.key === 'Enter') sendAI();">
 
 </div>
 
@@ -179,19 +222,19 @@ $ZNN is a Solana meme token built for community and fast blockchain transactions
 
 <div class="buttons">
 
-<a href="https://pump.fun/coin/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump" class="btn buy">Buy</a>
+<a href="https://pump.fun/coin/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump" class="btn buy" onclick="startMusic()">Buy</a>
 
-<a href="https://t.me/ZanonZNN" class="btn telegram">Telegram</a>
+<a href="https://t.me/ZanonZNN" class="btn telegram" onclick="startMusic()">Telegram</a>
 
-<a href="https://x.com/honey_sand94082" class="btn twitter">Twitter</a>
+<a href="https://x.com/honey_sand94082" class="btn twitter" onclick="startMusic()">Twitter</a>
 
-<button class="btn buy" onclick="connectWallet()">Connect Phantom</button>
+<button class="btn buy" onclick="connectWallet(); startMusic()">Connect Phantom</button>
 
 </div>
 
 </section>
 
-<section class="section">
+<section class="section" onclick="startMusic(); aiSectionInfo('pump')">
 
 <h2>Pump.fun Direct Swap</h2>
 
@@ -208,7 +251,7 @@ frameborder="0">
 
 </section>
 
-<section class="section">
+<section class="section" onclick="startMusic(); aiSectionInfo('chart')">
 
 <h2>Dexscreener Chart</h2>
 
@@ -224,7 +267,7 @@ height="400">
 
 </section>
 
-<section class="section">
+<section class="section" onclick="startMusic(); aiSectionInfo('transactions')">
 
 <h2>Live Solana Transactions</h2>
 
@@ -232,7 +275,7 @@ height="400">
 
 </section>
 
-<section class="section">
+<section class="section" onclick="startMusic(); aiSectionInfo('whales')">
 
 <h2>Whale Alerts</h2>
 
@@ -242,178 +285,166 @@ height="400">
 
 <script>
 
+/* MUSIC CONTROL - Starts only on first interaction */
+let musicStarted = false;
+
+function startMusic() {
+  if (!musicStarted) {
+    document.getElementById('bg-music').src = "https://www.youtube.com/embed/JYwUS06-5Ho?autoplay=1&loop=1&playlist=JYwUS06-5Ho&controls=0&showinfo=0&rel=0&modestbranding=1";
+    musicStarted = true;
+  }
+}
+
 /* WALLET */
-
 function connectWallet(){
-
-if(window.solana && window.solana.isPhantom){
-
-window.solana.connect()
-
-}else{
-
-alert("Install Phantom Wallet")
-
+  if(window.solana && window.solana.isPhantom){
+    window.solana.connect()
+  } else {
+    alert("Install Phantom Wallet")
+  }
 }
 
+/* PERSONAL AI ASSISTANT */
+const aiResponses = {
+  welcome: "Welcome to Zanon, Honey! 🚀 I'm your personal AI assistant. Ask me anything about $ZNN, chart, pump.fun, transactions, whales etc.",
+  znndefault: "$ZNN is a fun community-driven Solana meme token. Fast transactions, strong vibes! Join the movement.",
+  pump: "Pump.fun Direct Swap section lets you buy $ZNN instantly using your Solana wallet right here on the site. Easy and quick!",
+  chart: "Dexscreener Chart shows live $ZNN price, volume, liquidity, market cap, buys/sells, and trends on Solana. Watch for pumps!",
+  transactions: "Live Solana Transactions shows recent detected activity for $ZNN on the blockchain. Real-time updates every few seconds.",
+  whales: "Whale Alerts notify big wallet moves (large buys/sells) that can influence $ZNN price. Keep an eye on these!"
+};
+
+function sendAI() {
+  const input = document.getElementById('ai-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  // Show user message
+  const messages = document.getElementById('ai-messages');
+  const userMsg = document.createElement('div');
+  userMsg.className = 'ai-message user';
+  userMsg.textContent = text;
+  messages.appendChild(userMsg);
+  messages.scrollTop = messages.scrollHeight;
+
+  // Get response
+  let reply = aiResponses.znndefault;
+  const lower = text.toLowerCase();
+  if (lower.includes('znn') || lower.includes('token') || lower.includes('what is')) {
+    reply = aiResponses.znndefault;
+  } else if (lower.includes('pump') || lower.includes('buy') || lower.includes('swap')) {
+    reply = aiResponses.pump;
+  } else if (lower.includes('chart') || lower.includes('dex') || lower.includes('price')) {
+    reply = aiResponses.chart;
+  } else if (lower.includes('transaction') || lower.includes('tx')) {
+    reply = aiResponses.transactions;
+  } else if (lower.includes('whale') || lower.includes('big') || lower.includes('alert')) {
+    reply = aiResponses.whales;
+  }
+
+  // Show bot reply
+  setTimeout(() => {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'ai-message bot';
+    botMsg.textContent = reply;
+    messages.appendChild(botMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }, 600);
+
+  input.value = '';
 }
 
-/* AI GUIDE TEXT */
+function aiSectionInfo(section) {
+  let msg = "";
+  if (section === 'pump') msg = aiResponses.pump;
+  else if (section === 'chart') msg = aiResponses.chart;
+  else if (section === 'transactions') msg = aiResponses.transactions;
+  else if (section === 'whales') msg = aiResponses.whales;
 
-const aiMessages=[
-"Welcome to Zanon crypto ecosystem.",
-"$ZNN is built on the Solana blockchain.",
-"Use Pump.fun widget to buy ZNN directly.",
-"Join Telegram community for updates.",
-"Zanon focuses on community driven growth."
-]
-
-let aiIndex=0
-
-function rotateAI(){
-
-document.getElementById("ai-text").innerHTML=aiMessages[aiIndex]
-
-aiIndex++
-
-if(aiIndex>=aiMessages.length)aiIndex=0
-
+  if (msg) {
+    const messages = document.getElementById('ai-messages');
+    const botMsg = document.createElement('div');
+    botMsg.className = 'ai-message bot';
+    botMsg.textContent = msg;
+    messages.appendChild(botMsg);
+    messages.scrollTop = messages.scrollHeight;
+  }
 }
-
-setInterval(rotateAI,8000)
 
 /* TRANSACTIONS */
-
 function transactions(){
-
-let div=document.getElementById("transactions")
-
-div.innerHTML=""
-
-for(let i=0;i<5;i++){
-
-let t=document.createElement("div")
-
-t.innerHTML="🔄 New Solana Transaction Detected"
-
-t.style.padding="10px"
-
-div.appendChild(t)
-
+  let div=document.getElementById("transactions")
+  div.innerHTML=""
+  for(let i=0;i<5;i++){
+    let t=document.createElement("div")
+    t.innerHTML="🔄 New Solana Transaction Detected"
+    t.style.padding="10px"
+    div.appendChild(t)
+  }
 }
-
-}
-
 transactions()
-
 setInterval(transactions,10000)
 
 /* WHALES */
-
 function whales(){
-
-let div=document.getElementById("whales")
-
-div.innerHTML=""
-
-for(let i=0;i<3;i++){
-
-let w=document.createElement("div")
-
-w.innerHTML="🐋 Whale Wallet Activity Detected"
-
-w.style.padding="10px"
-
-div.appendChild(w)
-
+  let div=document.getElementById("whales")
+  div.innerHTML=""
+  for(let i=0;i<3;i++){
+    let w=document.createElement("div")
+    w.innerHTML="🐋 Whale Wallet Activity Detected"
+    w.style.padding="10px"
+    div.appendChild(w)
+  }
 }
-
-}
-
 whales()
-
 setInterval(whales,15000)
 
 /* 3D COIN */
-
 const scene=new THREE.Scene()
-
 const camera=new THREE.PerspectiveCamera(75,1,0.1,1000)
-
 const renderer=new THREE.WebGLRenderer({alpha:true})
-
 renderer.setSize(200,200)
-
 document.getElementById("coin3d").appendChild(renderer.domElement)
-
 const geometry=new THREE.CylinderGeometry(3,3,0.5,32)
-
 const material=new THREE.MeshBasicMaterial({color:0x14F195,wireframe:true})
-
 const coin=new THREE.Mesh(geometry,material)
-
 scene.add(coin)
-
 camera.position.z=6
-
 function animate(){
-
-requestAnimationFrame(animate)
-
-coin.rotation.y+=0.03
-
-renderer.render(scene,camera)
-
+  requestAnimationFrame(animate)
+  coin.rotation.y+=0.03
+  renderer.render(scene,camera)
 }
-
 animate()
 
 /* GALAXY */
-
 const canvas=document.getElementById("galaxy")
-
 const ctx=canvas.getContext("2d")
-
 canvas.width=window.innerWidth
 canvas.height=window.innerHeight
-
 let stars=[]
-
 for(let i=0;i<500;i++){
-
-stars.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-size:Math.random()*2
-})
-
+  stars.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    size:Math.random()*2
+  })
 }
-
 function galaxy(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-ctx.fillStyle="white"
-
-stars.forEach(s=>{
-
-ctx.beginPath()
-ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
-ctx.fill()
-
-s.y+=0.2
-
-if(s.y>canvas.height)s.y=0
-
-})
-
-requestAnimationFrame(galaxy)
-
+  ctx.clearRect(0,0,canvas.width,canvas.height)
+  ctx.fillStyle="white"
+  stars.forEach(s=>{
+    ctx.beginPath()
+    ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
+    ctx.fill()
+    s.y+=0.2
+    if(s.y>canvas.height)s.y=0
+  })
+  requestAnimationFrame(galaxy)
 }
-
 galaxy()
 
 </script>
 
 </body>
-</html>
+  </html>
