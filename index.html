@@ -6,6 +6,32 @@
     <title>Zanon Official | $ZNN - Blockchain Universe</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Token Metadata for Solana (JSON-LD for better integration with wallets/explorers) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Cryptocurrency",
+      "name": "Zanon",
+      "symbol": "$ZNN",
+      "description": "Zanon ek community-driven cryptocurrency hai jo gaming aur fast transactions ke liye banayi gayi hai.",
+      "image": "https://aapki-website.com/logo.png",
+      "url": "https://zanon-crypto.carrd.co/",
+      "sameAs": [
+        "https://twitter.com/honey_sand94082",
+        "https://t.me/ZanonZNN"
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "Chain ID",
+        "value": "solana"
+      },
+      "additionalProperty": {
+        "@type": "PropertyValue",
+        "name": "Token Address",
+        "value": "ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump"
+      }
+    }
+    </script>
     <style>
         * {
             margin: 0;
@@ -198,6 +224,12 @@
             box-shadow: 0 0 20px rgba(153, 69, 255, 0.5);
         }
 
+        .zanon-crypto {
+            background: linear-gradient(45deg, #FF6B35, #ff8c4a);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+
         .btn:hover {
             transform: scale(1.1) rotate(2deg);
             filter: brightness(1.2);
@@ -261,6 +293,22 @@
             box-shadow: 0 0 20px rgba(20, 241, 149, 0.5);
         }
 
+        /* Background Music Player styling */
+        #bg-music {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            opacity: 0.8;
+        }
+
+        audio {
+            width: 180px;
+            height: 30px;
+            border-radius: 20px;
+            background: rgba(20, 241, 149, 0.2);
+        }
+
         /* Grid */
         .grid {
             display: grid;
@@ -310,6 +358,12 @@
     </style>
 </head>
 <body>
+    <!-- Background Music: Lightless Galaxy (Crypto Dreams - Gaming Synthwave Chill Technology from Pixabay - Royalty-Free) -->
+    <audio id="bg-music" controls loop muted>
+        <source src="https://cdn.pixabay.com/download/audio/2022/12/07/audio_0a2e8b8b8b.mp3?filename=crypto-dreams-gaming-synthwave-chill-technology-280693.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <div id="grid-overlay"></div>
     <canvas id="starfield"></canvas>
     <canvas id="blockchain"></canvas>
@@ -333,6 +387,7 @@
             <a href="https://pump.fun/coin/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump" class="btn buy" target="_blank">Buy on Pump.fun</a>
             <a href="https://t.me/ZanonZNN" class="btn telegram" target="_blank">Join Telegram</a>
             <a href="https://x.com/honey_sand94082" class="btn twitter" target="_blank">Follow on X</a>
+            <a href="https://zanon-crypto.carrd.co/" class="btn zanon-crypto" target="_blank">Zanon Crypto Site</a>
             <button class="btn wallet" onclick="connectWallet()">Connect Phantom</button>
         </div>
     </section>
@@ -603,6 +658,16 @@
         }
         animate();
 
+        // Auto-unmute music on first user interaction
+        document.addEventListener('click', function() {
+            const audio = document.getElementById('bg-music');
+            if (audio.muted) {
+                audio.muted = false;
+                audio.volume = 0.3;
+                audio.play().catch(e => console.log("Autoplay prevented:", e));
+            }
+        }, { once: true });
+
         // Real-time price fetching using CoinGecko API
         async function fetchPrices() {
             try {
@@ -615,7 +680,7 @@
                 console.error('Error fetching prices:', error);
             }
 
-            // For $ZNN, use a placeholder or integrate Birdeye API if needed; here using Dexscreener-like fetch
+            // For $ZNN, use Dexscreener API
             try {
                 const znnResponse = await fetch('https://api.dexscreener.com/latest/dex/tokens/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump');
                 const znnData = await znnResponse.json();
