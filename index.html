@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zanon Official | $ZNN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>Zanon Official | $ZNN - Galactic Blockchain Empire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -14,419 +14,531 @@
         }
 
         body {
-            background: #000;
-            color: white;
-            font-family: Roboto;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 70%, #1a0033 100%);
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
             overflow-x: hidden;
             text-align: center;
+            position: relative;
         }
 
-        /* star background */
+        /* Galaxy Nebula Background */
+        #nebula {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -4;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            animation: nebulaShift 20s ease-in-out infinite;
+        }
+
+        @keyframes nebulaShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+
+        /* Enhanced starfield with twinkling */
         #starfield {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -3;
         }
 
-        /* blockchain animation canvas */
+        /* Dynamic blockchain galaxy network */
         #blockchain {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: -2;
             pointer-events: none;
         }
 
-        /* hero */
+        /* Holographic grid overlay */
+        #grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(20, 241, 149, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(153, 69, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.4;
+            animation: gridPulse 6s ease-in-out infinite alternate, gridRotate 30s linear infinite;
+        }
+
+        @keyframes gridPulse {
+            0% { opacity: 0.2; }
+            100% { opacity: 0.6; }
+        }
+
+        @keyframes gridRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Floating particles for uniqueness */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #14F195;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Live price ticker with glow */
+        #price-ticker {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid #14F195;
+            z-index: 10;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 0 20px rgba(20, 241, 149, 0.5);
+        }
+
+        #ticker-content {
+            display: inline-block;
+            animation: scroll 40s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .price-item {
+            display: inline-block;
+            margin: 0 40px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px #14F195;
+        }
+
+        .price-item.positive { color: #14F195; text-shadow: 0 0 10px #14F195; }
+        .price-item.negative { color: #FF6B35; text-shadow: 0 0 10px #FF6B35; }
+
+        /* Hero with cosmic entrance */
         .hero {
-            padding: 80px 20px;
+            padding: 120px 20px 80px;
+            position: relative;
+            z-index: 1;
+            animation: heroEntrance 2s ease-out;
+        }
+
+        @keyframes heroEntrance {
+            from { opacity: 0; transform: scale(0.8) translateY(50px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .hero h1 {
-            font-family: Orbitron;
-            font-size: 4rem;
-            background: linear-gradient(45deg, #14F195, #9945FF);
+            font-family: 'Orbitron', monospace;
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #14F195, #9945FF, #FF6B35, #14F195);
+            background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 3s ease-in-out infinite, gradientShift 4s ease infinite;
+            text-shadow: 0 0 30px rgba(20, 241, 149, 0.7);
         }
 
-        /* 3D coin */
+        @keyframes textGlow {
+            from { filter: drop-shadow(0 0 10px #14F195); }
+            to { filter: drop-shadow(0 0 30px #9945FF); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.8rem;
+            margin: 15px 0 50px;
+            color: #14F195;
+            text-shadow: 0 0 15px rgba(20, 241, 149, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* 3D Rotating Coin Image */
         #coin3d {
-            width: 220px;
-            height: 220px;
-            margin: 40px auto;
+            width: 300px;
+            height: 300px;
+            margin: 50px auto;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate3D 10s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(20, 241, 149, 0.5));
         }
 
-        /* buttons */
+        @keyframes rotate3D {
+            0% { transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg); }
+            100% { transform: rotateY(360deg) rotateX(360deg) rotateZ(360deg); }
+        }
+
+        /* Enhanced buttons with cosmic hover */
         .buttons {
-            margin-top: 25px;
+            margin-top: 40px;
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 25px;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 12px 25px;
-            border-radius: 30px;
+            padding: 18px 35px;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.5s ease;
+            font-family: 'Orbitron', monospace;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            transition: all 0.6s;
+            transform: rotate(45deg);
+        }
+
+        .btn:hover::before {
+            top: -100%;
+            left: -100%;
+            animation: shine 0.6s ease;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg) scale(0); }
+            100% { transform: rotate(45deg) scale(1); }
         }
 
         .buy {
-            background: #14F195;
-            color: black;
+            background: linear-gradient(45deg, #14F195, #00ff88);
+            color: #000;
+            box-shadow: 0 0 30px rgba(20, 241, 149, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .buy-direct {
+            background: linear-gradient(45deg, #FF6B35, #ff8844);
+            color: white;
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.7);
         }
 
         .telegram {
-            background: #229ED9;
+            background: linear-gradient(45deg, #229ED9, #0088cc);
             color: white;
+            box-shadow: 0 0 30px rgba(34, 158, 217, 0.7);
         }
 
         .twitter {
-            border: 1px solid white;
-            color: white;
+            border: 2px solid #14F195;
+            color: #14F195;
+            background: transparent;
+            box-shadow: 0 0 30px rgba(20, 241, 149, 0.4);
         }
 
         .wallet {
-            background: #9945FF;
+            background: linear-gradient(45deg, #9945FF, #cc66ff);
             color: white;
+            box-shadow: 0 0 30px rgba(153, 69, 255, 0.7);
         }
 
         .btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px #9945FF;
+            transform: scale(1.15) rotate(5deg);
+            filter: brightness(1.3);
+            box-shadow: 0 0 40px currentColor;
         }
 
-        /* sections */
+        /* Sections with warp-in animation */
         .section {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: auto;
-            padding: 60px 20px;
+            padding: 100px 20px;
+            position: relative;
+            z-index: 1;
+            animation: warpIn 1.5s ease-out;
         }
 
-        /* animated cards */
+        @keyframes warpIn {
+            from { opacity: 0; transform: perspective(1000px) rotateY(90deg); }
+            to { opacity: 1; transform: perspective(1000px) rotateY(0deg); }
+        }
+
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            background: linear-gradient(45deg, #14F195, #9945FF, #FF6B35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(20, 241, 149, 0.5);
+            animation: textGlow 2s infinite alternate;
+        }
+
+        /* Holographic cards with depth */
         .card {
-            background: #111;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 20px;
-            transition: 0.4s;
+            background: linear-gradient(145deg, rgba(17,17,17,0.8), rgba(26,26,26,0.8));
+            border: 1px solid rgba(20, 241, 149, 0.3);
+            border-radius: 25px;
+            padding: 40px;
+            margin-top: 25px;
+            transition: all 0.6s ease;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(20, 241, 149, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #14F195, transparent);
+            animation: scan 3s infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 25px #9945FF;
+            transform: translateY(-20px) rotateX(10deg) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(153, 69, 255, 0.5), 0 0 40px rgba(20, 241, 149, 0.3);
+            border-color: #14F195;
         }
 
-        /* grid */
+        /* Grid with orbit effect */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
         }
 
         .item {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            transition: 0.3s;
+            background: linear-gradient(145deg, #1a1a1a, #111);
+            padding: 25px;
+            border-radius: 15px;
+            transition: 0.4s;
+            border: 1px solid rgba(153, 69, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(20, 241, 149, 0.2) 0%, transparent 70%);
+            transition: all 0.5s;
+            transform: translate(-50%, -50%);
+        }
+
+        .item:hover::after {
+            width: 200%;
+            height: 200%;
         }
 
         .item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px #14F195;
+            transform: scale(1.08) rotate(2deg);
+            box-shadow: 0 0 20px #14F195;
         }
 
-        /* leaderboard */
+        /* Enhanced leaderboard */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 15px;
+            background: rgba(17,17,17,0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(153, 69, 255, 0.2);
         }
 
-        td,
         th {
-            border: 1px solid #333;
-            padding: 10px;
+            background: linear-gradient(45deg, #9945FF, #14F195);
+            color: white;
+            padding: 18px;
+            font-family: 'Orbitron', monospace;
         }
 
-        /* contra game */
-        #gameCanvas {
-            background: black;
-            border: 2px solid #14F195;
-            margin-top: 20px;
+        td {
+            border: 1px solid #333;
+            padding: 15px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        tr:hover td {
+            background: rgba(20, 241, 149, 0.15);
+            transform: scale(1.02);
+        }
+
+        /* Your Balance Card */
+        #balance-card {
+            background: linear-gradient(145deg, #111, #1a1a1a);
+            border: 2px solid #9945FF;
+            animation: glowBorder 2s infinite alternate;
+        }
+
+        @keyframes glowBorder {
+            from { box-shadow: 0 0 10px #9945FF; }
+            to { box-shadow: 0 0 30px #9945FF; }
         }
     </style>
 </head>
 <body>
+    <div id="nebula"></div>
+    <div id="grid-overlay"></div>
     <canvas id="starfield"></canvas>
     <canvas id="blockchain"></canvas>
 
+    <!-- Live Price Ticker -->
+    <div id="price-ticker">
+        <div id="ticker-content">
+            <span class="price-item" id="btc-price">BTC: $??,??? | </span>
+            <span class="price-item" id="eth-price">ETH: $??,??? | </span>
+            <span class="price-item" id="sol-price">SOL: $??? | </span>
+            <span class="price-item" id="znn-price">$ZNN: $0.???? | </span>
+            <span class="price-item">Galactic Trades Live 🚀</span>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <script>
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 20000);
+        }
+        setInterval(createParticle, 500);
+    </script>
+
     <section class="hero">
         <h1>$ZNN</h1>
-        <p>Zanon Solana Meme Token</p>
-        <div id="coin3d"></div>
+        <p>Zanon Solana Meme Token - Conquer the Galactic Blockchain</p>
+        <img id="coin3d" src="zanon-coin.jpg" alt="$ZNN Coin">
         <div class="buttons">
-            <a href="https://pump.fun/coin/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump" class="btn buy" target="_blank">Buy Pump.fun</a>
-            <a href="https://t.me/ZanonZNN" class="btn telegram" target="_blank">Telegram</a>
-            <a href="https://x.com/honey_sand94082" class="btn twitter" target="_blank">X Twitter</a>
-            <button class="btn wallet" onclick="connectWallet()">Connect Phantom</button>
+            <a href="https://pump.fun/coin/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump?ref=your-affiliate-if-any" class="btn buy" target="_blank" rel="nofollow">Buy $ZNN Now (Affiliate)</a>
+            <button class="btn buy-direct" id="buyDirectBtn" onclick="buyZNNDirect()" disabled>Buy Direct with Wallet (0.1 SOL)</button>
+            <a href="https://t.me/ZanonZNN" class="btn telegram" target="_blank">Join Galactic Telegram</a>
+            <a href="https://x.com/honey_sand94082" class="btn twitter" target="_blank">Follow on X Cosmos</a>
+            <button class="btn wallet" onclick="connectWallet()">Connect Phantom Wallet</button>
         </div>
     </section>
+
     <section class="section">
-        <h2>Token Info</h2>
+        <h2>Token Galaxy Info</h2>
         <div class="grid">
             <div class="item">Name: Zanon</div>
             <div class="item">Symbol: $ZNN</div>
-            <div class="item">Supply: <span id="supply">0</span></div>
-            <div class="item">Network: Solana</div>
+            <div class="item">Total Supply: <span id="supply">1,000,000,000</span></div>
+            <div class="item">Network: Solana Galaxy</div>
+            <div class="item" id="current-price">Price: Loading...</div>
+            <div class="item" id="market-cap">Market Cap: Loading...</div>
+            <div class="item" id="your-balance">Your Balance: <span id="balance">0</span> $ZNN</div>
         </div>
     </section>
+
     <section class="section">
-        <h2>Dexscreener Chart</h2>
+        <h2>$ZNN Live Chart - Nebula View</h2>
         <div class="card">
-            <iframe src="https://dexscreener.com/solana" width="100%" height="400" frameborder="0"></iframe>
+            <iframe src="https://dexscreener.com/solana/byrvzqqxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump?embed=1&theme=dark" width="100%" height="450" frameborder="0"></iframe>
         </div>
     </section>
+
     <section class="section">
-        <h2>Crypto Market Charts</h2>
+        <h2>Major Crypto Constellations</h2>
         <div class="card">
-            <script src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js">
+            <script src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" type="text/javascript">
                 {
                     "width": "100%",
-                    "height": "400",
+                    "height": "550",
                     "symbolsGroups": [{
-                        "name": "Crypto",
+                        "name": "Galactic Coins",
                         "symbols": [
-                            {"name": "BINANCE:BTCUSDT"},
-                            {"name": "BINANCE:ETHUSDT"},
-                            {"name": "BINANCE:SOLUSDT"}
+                            {"name": "BINANCE:BTCUSDT", "displayName": "Bitcoin"},
+                            {"name": "BINANCE:ETHUSDT", "displayName": "Ethereum"},
+                            {"name": "BINANCE:SOLUSDT", "displayName": "Solana"},
+                            {"name": "BINANCE:ADAUSDT", "displayName": "Cardano"},
+                            {"name": "BINANCE:DOTUSDT", "displayName": "Polkadot"}
                         ]
                     }]
                 }
             </script>
         </div>
     </section>
+
     <section class="section">
-        <h2>Token Holder Leaderboard</h2>
+        <h2>Token Holder Nebula Leaderboard</h2>
         <div class="card">
             <table>
                 <tr>
                     <th>Rank</th>
                     <th>Wallet</th>
                     <th>Tokens</th>
+                    <th>% of Galaxy</th>
                 </tr>
                 <tr>
                     <td>1</td>
                     <td>9xA...21K</td>
                     <td>150M</td>
+                    <td>15%</td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>7KJ...8PL</td>
-                    <td>90M</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>3LM...7QP</td>
-                    <td>50M</td>
-                </tr>
-            </table>
-        </div>
-    </section>
-    <section class="section">
-        <h2>Contra Mini Game</h2>
-        <div class="card">
-            <canvas id="gameCanvas" width="600" height="300"></canvas>
-        </div>
-    </section>
-    <script>
-        /* star background */
-        const canvas = document.getElementById("starfield");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let stars = [];
-
-        for (let i = 0; i < 200; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2,
-                speed: Math.random() * 0.5
-            });
-        }
-
-        function animateStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "white";
-
-            stars.forEach(star => {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                ctx.fill();
-
-                star.y += star.speed;
-
-                if (star.y > canvas.height) {
-                    star.y = 0;
-                    star.x = Math.random() * canvas.width;
-                }
-            });
-
-            requestAnimationFrame(animateStars);
-        }
-
-        animateStars();
-
-        /* blockchain perimeter animation */
-        const bcCanvas = document.getElementById("blockchain");
-        const bcCtx = bcCanvas.getContext("2d");
-
-        bcCanvas.width = window.innerWidth;
-        bcCanvas.height = window.innerHeight;
-
-        const blockSize = 20;
-        const numBlocks = 20;
-        const perimeter = 2 * (bcCanvas.width + bcCanvas.height);
-        const spacing = perimeter / numBlocks;
-        let time = 0;
-        const speed = 1; // pixels per frame
-
-        function getPositionAlongPerimeter(t) {
-            const w = bcCanvas.width;
-            const h = bcCanvas.height;
-            const pos = t % perimeter;
-
-            if (pos < w) {
-                // Top side: left to right
-                return { x: pos, y: blockSize / 2, dir: 'horizontal' };
-            } else if (pos < w + h) {
-                // Right side: top to bottom
-                return { x: w - blockSize / 2, y: pos - w + blockSize / 2, dir: 'vertical' };
-            } else if (pos < 2 * w + h) {
-                // Bottom side: right to left
-                return { x: w - (pos - w - h) - blockSize / 2, y: h - blockSize / 2, dir: 'horizontal' };
-            } else {
-                // Left side: bottom to top
-                return { x: blockSize / 2, y: h - (pos - 2 * w - h) - blockSize / 2, dir: 'vertical' };
-            }
-        }
-
-        function drawBlockchain() {
-            bcCtx.clearRect(0, 0, bcCanvas.width, bcCanvas.height);
-
-            bcCtx.fillStyle = '#9945FF';
-            bcCtx.strokeStyle = '#14F195';
-            bcCtx.lineWidth = 2;
-
-            for (let i = 0; i < numBlocks; i++) {
-                const blockPos = (time + i * spacing) % perimeter;
-                const { x, y } = getPositionAlongPerimeter(blockPos);
-
-                // Draw block
-                bcCtx.fillRect(x - blockSize / 2, y - blockSize / 2, blockSize, blockSize);
-                bcCtx.strokeRect(x - blockSize / 2, y - blockSize / 2, blockSize, blockSize);
-
-                // Optional: Draw connection line to next block (simple approximation)
-                const nextPos = (time + (i + 1) * spacing) % perimeter;
-                const { x: nextX, y: nextY } = getPositionAlongPerimeter(nextPos);
-                bcCtx.beginPath();
-                bcCtx.moveTo(x, y);
-                bcCtx.lineTo(nextX, nextY);
-                bcCtx.stroke();
-            }
-
-            time += speed;
-            requestAnimationFrame(drawBlockchain);
-        }
-
-        drawBlockchain();
-
-        /* supply counter */
-        let count = 0;
-        let target = 1000000000;
-
-        let counter = setInterval(function () {
-            count += 5000000;
-
-            document.getElementById("supply").innerText = count.toLocaleString();
-
-            if (count >= target) {
-                document.getElementById("supply").innerText = "1,000,000,000";
-                clearInterval(counter);
-            }
-        }, 10);
-
-        /* phantom wallet */
-        function connectWallet() {
-            if (window.solana) {
-                window.solana.connect();
-                alert("Phantom Wallet Connected");
-            } else {
-                alert("Install Phantom Wallet");
-            }
-        }
-
-        /* three js coin */
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true });
-
-        renderer.setSize(220, 220);
-
-        document.getElementById("coin3d").appendChild(renderer.domElement);
-
-        const geometry = new THREE.CylinderGeometry(3, 3, 1, 32);
-        const material = new THREE.MeshBasicMaterial({ color: 0x14F195, wireframe: true });
-        const coin = new THREE.Mesh(geometry, material);
-
-        scene.add(coin);
-        camera.position.z = 5;
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            coin.rotation.y += 0.02;
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        /* mini contra */
-        const game = document.getElementById("gameCanvas");
-        const g = game.getContext("2d");
-
-        let x = 50;
-
-        document.addEventListener("keydown", e => {
-            if (e.key === "ArrowRight") x += 10;
-            if (e.key === "ArrowLeft") x -= 10;
-        });
-
-        function loop() {
-            g.clearRect(0, 0, 600, 300);
-
-            g.fillStyle = "#14F195";
-            g.fillRect(x, 250, 20, 20);
-
-            requestAnimationFrame(loop);
-        }
-
-        loop();
-    </script>
-</body>
-</html>
+                    <td
