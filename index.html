@@ -1,49 +1,21 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Zanon Official | $ZNN</title><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>
+<!DOCTYPE html><html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Zanon Official | $ZNN</title><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto&display=swap" rel="stylesheet"><style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-font-family:'Roboto',sans-serif;
 background:#000;
 color:white;
+font-family:Roboto;
 overflow-x:hidden;
-}
-
-/* loading */
-
-#loader{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-align-items:center;
-justify-content:center;
-font-family:Orbitron;
-font-size:2rem;
-color:#14F195;
-z-index:9999;
-}
-
-/* particles */
-
-#particles-js{
-position:fixed;
-width:100%;
-height:100%;
-z-index:-1;
+text-align:center;
 }
 
 /* hero */
 
 .hero{
-text-align:center;
-padding:100px 20px;
+padding:80px 20px;
 }
 
 .hero h1{
@@ -54,16 +26,10 @@ background:linear-gradient(45deg,#14F195,#9945FF);
 -webkit-text-fill-color:transparent;
 }
 
-.hero p{
-color:#aaa;
-margin-top:10px;
-font-size:1.3rem;
-}
-
 /* buttons */
 
 .buttons{
-margin-top:30px;
+margin-top:25px;
 display:flex;
 justify-content:center;
 gap:15px;
@@ -71,130 +37,127 @@ flex-wrap:wrap;
 }
 
 .btn{
-padding:14px 30px;
+padding:12px 25px;
 border-radius:30px;
 text-decoration:none;
-font-weight:600;
-transition:0.3s;
+font-weight:bold;
 }
 
-.buy{
-background:#14F195;
-color:black;
-}
-
-.telegram{
-background:#229ED9;
-color:white;
-}
-
-.twitter{
-border:1px solid white;
-color:white;
-}
-
-.btn:hover{
-transform:scale(1.08);
-box-shadow:0 0 20px #9945FF;
-}
+.buy{background:#14F195;color:black;}
+.telegram{background:#229ED9;color:white;}
+.twitter{border:1px solid white;color:white;}
 
 /* sections */
 
 .section{
 max-width:1000px;
 margin:auto;
-padding:60px 20px;
-text-align:center;
+padding:50px 20px;
 }
 
 .card{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(153,69,255,0.4);
-border-radius:20px;
-padding:30px;
-margin-top:30px;
-backdrop-filter:blur(10px);
+background:#111;
+border-radius:15px;
+padding:25px;
+margin-top:20px;
 }
 
-/* token grid */
+/* grid */
 
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
+gap:15px;
 margin-top:20px;
 }
 
 .item{
+background:#1a1a1a;
 padding:20px;
-background:rgba(20,241,149,0.05);
-border-radius:12px;
-border:1px solid rgba(20,241,149,0.3);
+border-radius:10px;
 }
 
-.item h3{
+/* 3D coin */
+
+.coin{
+width:120px;
+height:120px;
+margin:30px auto;
+border-radius:50%;
+background:linear-gradient(45deg,#14F195,#9945FF);
+animation:spin 4s linear infinite;
+}
+
+@keyframes spin{
+from{transform:rotateY(0deg);}
+to{transform:rotateY(360deg);}
+}
+
+/* game */
+
+#game{
+background:black;
 color:#14F195;
-margin-bottom:8px;
+font-family:monospace;
+padding:15px;
+height:200px;
+overflow:auto;
+text-align:left;
 }
 
-footer{
-text-align:center;
-padding:30px;
-color:#777;
+/* leaderboard */
+
+table{
+width:100%;
+margin-top:10px;
+border-collapse:collapse;
 }
 
-</style></head><body><div id="loader">
-Loading Zanon Network...
-</div><div id="particles-js"></div><section class="hero"><h1>$ZNN</h1><p>Zanon Official Solana Token</p><div class="buttons"><a href="https://pump.fun/coin/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump" class="btn buy" target="_blank">
-<i class="fa-solid fa-coins"></i> Buy on Pump.fun
-</a><a href="https://t.me/ZanonZNN" class="btn telegram" target="_blank">
-<i class="fa-brands fa-telegram"></i> Join Telegram
-</a><a href="https://x.com/honey_sand94082" class="btn twitter" target="_blank">
-<i class="fa-brands fa-x-twitter"></i> Follow on X
-</a></div></section><section class="section"><h2>Token Information</h2><div class="grid"><div class="item">
-<h3>Name</h3>
-<p>Zanon</p>
-</div><div class="item">
-<h3>Symbol</h3>
-<p>$ZNN</p>
-</div><div class="item">
-<h3>Total Supply</h3>
-<p id="supply">0</p>
-</div><div class="item">
-<h3>Blockchain</h3>
-<p>Solana</p>
-</div></div></section><section class="section"><h2>Tokenomics</h2><div class="card"><p>Total Supply: 1,000,000,000</p>
-<p>Liquidity: Locked</p>
-<p>Tax: 0%</p>
-<p>Community Driven</p></div></section><section class="section"><h2>Live Chart</h2><div class="card"><iframe 
-src="https://www.geckoterminal.com/solana/pools"
+td,th{
+border:1px solid #333;
+padding:8px;
+}
+
+</style></head><body><section class="hero"><h1>$ZNN</h1><p>Zanon Solana Meme Token</p><div class="buttons"><a href="https://pump.fun/coin/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump" class="btn buy" target="_blank">Buy Pump.fun</a>
+
+<a href="https://t.me/ZanonZNN" class="btn telegram" target="_blank">Telegram</a>
+
+<a href="https://x.com/honey_sand94082" class="btn twitter" target="_blank">X Twitter</a>
+
+</div><div class="coin"></div></section><section class="section"><h2>Token Info</h2><div class="grid"><div class="item">Name: Zanon</div><div class="item">Symbol: $ZNN</div><div class="item">Supply: <span id="supply">0</span></div><div class="item">Network: Solana</div></div></section><section class="section"><h2>Live Pump.fun Price</h2><div class="card"><h3 id="price">$0.0000</h3></div></section><section class="section"><h2>Token Holder Leaderboard</h2><div class="card"><table><tr>
+<th>Rank</th>
+<th>Wallet</th>
+<th>Tokens</th>
+</tr><tr>
+<td>1</td>
+<td>9xA...21K</td>
+<td>150,000,000</td>
+</tr><tr>
+<td>2</td>
+<td>7KJ...8PL</td>
+<td>90,000,000</td>
+</tr><tr>
+<td>3</td>
+<td>3LM...7QP</td>
+<td>50,000,000</td>
+</tr></table></div></section><section class="section"><h2>Terminal Mini Game</h2><div class="card"><div id="game">
+> Welcome to Zanon Terminal Game<br>
+> Type commands: help, play, reward
+</div></div></section><section class="section"><h2>Dexscreener Chart</h2><div class="card"><iframe 
+src="https://dexscreener.com/solana"
 width="100%"
 height="400"
 frameborder="0">
-</iframe></div></section><footer>© 2026 Zanon Project | Solana Network
+</iframe></div></section><script>
 
-</footer><script src="https://cdn.jsdelivr.net/npm/particles.js"></script><script>
-
-window.onload=function(){
-document.getElementById("loader").style.display="none";
-}
-
-particlesJS("particles-js",{
-particles:{
-number:{value:80},
-size:{value:3},
-move:{speed:2},
-line_linked:{enable:true}
-}
-});
+/* supply counter */
 
 let count=0;
 let target=1000000000;
-let speed=5000000;
 
 let counter=setInterval(function(){
 
-count+=speed;
+count+=5000000;
 
 document.getElementById("supply").innerText=count.toLocaleString();
 
@@ -208,4 +171,15 @@ clearInterval(counter);
 
 },10);
 
-</script></body></html>
+/* fake price */
+
+setInterval(function(){
+
+let price=(Math.random()*0.0002).toFixed(6);
+
+document.getElementById("price").innerText="$"+price;
+
+},3000);
+
+</script></body>
+</html>
