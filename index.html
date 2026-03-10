@@ -7,299 +7,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #1a0033 100%);
-            color: #ffffff;
-            font-family: 'Roboto', sans-serif;
-            overflow-x: hidden;
-            text-align: center;
-            position: relative;
-        }
-
-        /* Enhanced starfield with nebula glow */
-        #starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -3;
-        }
-
-        /* Advanced blockchain network animation */
-        #blockchain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        /* Overlay grid for blockchain feel */
-        #grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(20, 241, 149, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(20, 241, 149, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            opacity: 0.3;
-            animation: gridPulse 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes gridPulse {
-            0% { opacity: 0.2; }
-            100% { opacity: 0.5; }
-        }
-
-        /* Live price ticker bar */
-        #price-ticker {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            border-bottom: 1px solid #14F195;
-            z-index: 10;
-            padding: 10px 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        #ticker-content {
-            display: inline-block;
-            animation: scroll 30s linear infinite;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        .price-item {
-            display: inline-block;
-            margin: 0 30px;
-            font-family: 'Orbitron', monospace;
-            color: #14F195;
-        }
-
-        .price-item.positive { color: #14F195; }
-        .price-item.negative { color: #FF6B35; }
-
-        /* Hero section with enhanced glow */
-        .hero {
-            padding: 100px 20px 80px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: 5rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, #14F195, #9945FF, #FF6B35);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: textGlow 2s ease-in-out infinite alternate;
-            text-shadow: 0 0 20px rgba(20, 241, 149, 0.5);
-        }
-
-        @keyframes textGlow {
-            from { filter: drop-shadow(0 0 5px #14F195); }
-            to { filter: drop-shadow(0 0 20px #9945FF); }
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin: 10px 0 40px;
-            color: #14F195;
-            text-shadow: 0 0 10px rgba(20, 241, 149, 0.3);
-        }
-
-        /* Enhanced 3D coin with orbit */
-        #coin3d {
-            width: 250px;
-            height: 250px;
-            margin: 40px auto;
-            position: relative;
-        }
-
-        /* Buttons with neon glow */
-        .buttons {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-family: 'Orbitron', monospace;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .buy {
-            background: linear-gradient(45deg, #14F195, #00ff88);
-            color: #000;
-            box-shadow: 0 0 20px rgba(20, 241, 149, 0.5);
-        }
-
-        .telegram {
-            background: linear-gradient(45deg, #229ED9, #0088cc);
-            color: white;
-            box-shadow: 0 0 20px rgba(34, 158, 217, 0.5);
-        }
-
-        .twitter {
-            border: 2px solid #14F195;
-            color: #14F195;
-            background: transparent;
-            box-shadow: 0 0 20px rgba(20, 241, 149, 0.3);
-        }
-
-        .wallet {
-            background: linear-gradient(45deg, #9945FF, #cc66ff);
-            color: white;
-            box-shadow: 0 0 20px rgba(153, 69, 255, 0.5);
-        }
-
-        .btn:hover {
-            transform: scale(1.1) rotate(2deg);
-            filter: brightness(1.2);
-        }
-
-        /* Sections with fade-in animation */
-        .section {
-            max-width: 1200px;
-            margin: auto;
-            padding: 80px 20px;
-            position: relative;
-            z-index: 1;
-            animation: fadeIn 1s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            background: linear-gradient(45deg, #14F195, #9945FF);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(20, 241, 149, 0.3);
-        }
-
-        /* Enhanced cards with holographic effect */
-        .card {
-            background: linear-gradient(145deg, #111, #1a1a1a);
-            border: 1px solid rgba(20, 241, 149, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 20px;
-            transition: all 0.5s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        }
-
-        .card:hover {
-            transform: translateY(-15px) rotateX(5deg);
-            box-shadow: 0 20px 40px rgba(153, 69, 255, 0.4), 0 0 30px rgba(20, 241, 149, 0.2);
-            border-color: #14F195;
-        }
-
-        /* Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .item {
-            background: linear-gradient(145deg, #1a1a1a, #111);
-            padding: 20px;
-            border-radius: 10px;
-            transition: 0.3s;
-            border: 1px solid rgba(153, 69, 255, 0.3);
-        }
-
-        .item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px #14F195;
-        }
-
-        /* Leaderboard table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            background: #111;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        th {
-            background: linear-gradient(45deg, #9945FF, #14F195);
-            color: white;
-            padding: 15px;
-        }
-
-        td {
-            border: 1px solid #333;
-            padding: 12px;
-            transition: 0.3s;
-        }
-
-        tr:hover td {
-            background: rgba(20, 241, 149, 0.1);
-        }
-
-        /* Game canvas */
-        #gameCanvas {
-            background: linear-gradient(180deg, #000, #1a0033);
-            border: 2px solid #14F195;
-            margin-top: 20px;
-            border-radius: 10px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #1a0033 100%); color: #ffffff; font-family: 'Roboto', sans-serif; overflow-x: hidden; text-align: center; position: relative; }
+        #starfield, #blockchain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; }
+        #blockchain { z-index: -2; pointer-events: none; }
+        #grid-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(20, 241, 149, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(20, 241, 149, 0.1) 1px, transparent 1px); background-size: 50px 50px; z-index: -1; opacity: 0.3; animation: gridPulse 4s ease-in-out infinite alternate; }
+        @keyframes gridPulse { 0% { opacity: 0.2; } 100% { opacity: 0.5; } }
+        #price-ticker { position: fixed; top: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.8); border-bottom: 1px solid #14F195; z-index: 10; padding: 10px 0; overflow: hidden; white-space: nowrap; }
+        #ticker-content { display: inline-block; animation: scroll 30s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .price-item { display: inline-block; margin: 0 30px; font-family: 'Orbitron', monospace; color: #14F195; }
+        .hero { padding: 120px 20px 80px; position: relative; z-index: 1; }
+        .hero h1 { font-family: 'Orbitron', monospace; font-size: 5rem; font-weight: 900; background: linear-gradient(45deg, #14F195, #9945FF, #FF6B35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textGlow 2s ease-in-out infinite alternate; }
+        @keyframes textGlow { from { filter: drop-shadow(0 0 5px #14F195); } to { filter: drop-shadow(0 0 20px #9945FF); } }
+        .hero p { font-size: 1.5rem; margin: 10px 0 40px; color: #14F195; }
+        .buttons { margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .btn { padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; cursor: pointer; transition: all 0.4s ease; font-family: 'Orbitron', monospace; border: none; }
+        .buy { background: #14F195; color: #000; }
+        .telegram { background: #229ED9; color: #fff; }
+        .twitter { border: 2px solid #14F195; color: #14F195; background: transparent; }
+        .wallet { background: #9945FF; color: #fff; }
+        .section { max-width: 1200px; margin: auto; padding: 60px 20px; position: relative; z-index: 1; }
+        .section h2 { font-family: 'Orbitron', monospace; font-size: 2.5rem; margin-bottom: 30px; color: #14F195; }
+        .card { background: rgba(20, 20, 20, 0.9); border: 1px solid rgba(20, 241, 149, 0.2); border-radius: 20px; padding: 40px; text-align: left; line-height: 1.6; }
+        .readme-text h3 { color: #9945FF; margin: 20px 0 10px; font-family: 'Orbitron'; }
+        .readme-text ul { list-style: none; margin-bottom: 20px; }
+        .readme-text li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .readme-text li::before { content: '🚀'; position: absolute; left: 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .item { background: #1a1a1a; padding: 20px; border-radius: 10px; border: 1px solid #333; }
+        table { width: 100%; border-collapse: collapse; background: #111; border-radius: 10px; overflow: hidden; }
+        th { background: #9945FF; color: white; padding: 15px; }
+        td { border: 1px solid #333; padding: 12px; }
     </style>
 </head>
 <body>
@@ -307,21 +46,18 @@
     <canvas id="starfield"></canvas>
     <canvas id="blockchain"></canvas>
 
-    <!-- Live Price Ticker -->
     <div id="price-ticker">
         <div id="ticker-content">
-            <span class="price-item" id="btc-price">BTC: $??,??? | </span>
-            <span class="price-item" id="eth-price">ETH: $??,??? | </span>
-            <span class="price-item" id="sol-price">SOL: $??? | </span>
-            <span class="price-item" id="znn-price">$ZNN: $0.???? | </span>
-            <span class="price-item">Loading live prices...</span>
+            <span class="price-item" id="btc-price">BTC: $??,???</span>
+            <span class="price-item" id="eth-price">ETH: $??,???</span>
+            <span class="price-item" id="sol-price">SOL: $???</span>
+            <span class="price-item" id="znn-price">$ZNN: $0.????</span>
         </div>
     </div>
 
     <section class="hero">
         <h1>$ZNN</h1>
-        <p>Zanon Solana Meme Token - The Future of Blockchain Memes</p>
-        <div id="coin3d"></div>
+        <p>THE UNSTOPPABLE GALACTIC DOMINION</p>
         <div class="buttons">
             <a href="https://pump.fun/coin/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump" class="btn buy" target="_blank">Buy on Pump.fun</a>
             <a href="https://t.me/ZanonZNN" class="btn telegram" target="_blank">Join Telegram</a>
@@ -331,280 +67,243 @@
     </section>
 
     <section class="section">
-        <h2>Token Info</h2>
+        <h2>PROJECT MANIFESTO (README)</h2>
+        <div class="card readme-text">
+            <h3>🌌 OVERVIEW</h3>
+            <p>Zanon is a decentralized meme ecosystem on the Solana Network, engineered for those who seek to build a digital empire. Powered by <b>Vanguard Math Logic</b>, Zanon is more than just a token—it is a movement toward financial sovereignty.</p>
+            
+            <h3>🚀 THE ZNN ADVANTAGE</h3>
+            <ul>
+                <li><b>Extreme Velocity:</b> Lightning-fast transactions on Solana.</li>
+                <li><b>Elite Community:</b> Join the 'Zanon Warriors' army.</li>
+                <li><b>Gaming Integration:</b> Future utility within the Project X-64 ecosystem.</li>
+            </ul>
+
+            <h3>🛣️ STRATEGIC ROADMAP</h3>
+            <p><b>PHASE 1:</b> Cosmic Ignition - Launch & Community Building.<br>
+               <b>PHASE 2:</b> Nebula Expansion - Raydium Listing & Marketing.<br>
+               <b>PHASE 3:</b> Gaming Dominion - Project X-64 Integration.<br>
+               <b>PHASE 4:</b> Galactic Listing - Target: Tier-1 CEX (Binance).</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>TOKENOMICS</h2>
         <div class="grid">
             <div class="item">Name: Zanon</div>
             <div class="item">Symbol: $ZNN</div>
-            <div class="item">Supply: <span id="supply">0</span></div>
+            <div class="item">Supply: 1,000,000,000</div>
             <div class="item">Network: Solana</div>
-            <div class="item" id="current-price">Price: Loading...</div>
-            <div class="item" id="market-cap">Market Cap: Loading...</div>
+            <div id="current-price" class="item">Price: Loading...</div>
+            <div id="market-cap" class="item">Market Cap: Loading...</div>
         </div>
     </section>
 
     <section class="section">
-        <h2>$ZNN Live Chart</h2>
+        <h2>LIVE MARKET CHART</h2>
         <div class="card">
-            <iframe src="https://dexscreener.com/solana/byrvzqqxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump?embed=1&theme=dark" width="100%" height="400" frameborder="0"></iframe>
+            <iframe src="https://dexscreener.com/solana/byrvzqqxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump?embed=1&theme=dark" width="100%" height="500" frameborder="0"></iframe>
         </div>
     </section>
 
     <section class="section">
-        <h2>Major Crypto Market Overview</h2>
-        <div class="card">
-            <script src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" type="text/javascript">
-                {
-                    "width": "100%",
-                    "height": "500",
-                    "symbolsGroups": [{
-                        "name": "Top Cryptos",
-                        "symbols": [
-                            {"name": "BINANCE:BTCUSDT", "displayName": "Bitcoin"},
-                            {"name": "BINANCE:ETHUSDT", "displayName": "Ethereum"},
-                            {"name": "BINANCE:SOLUSDT", "displayName": "Solana"},
-                            {"name": "BINANCE:ADAUSDT", "displayName": "Cardano"}
-                        ]
-                    }]
-                }
-            </script>
-        </div>
-    </section>
-
-    <section class="section">
-        <h2>Token Holder Leaderboard</h2>
+        <h2>HOLDER LEADERBOARD</h2>
         <div class="card">
             <table>
-                <tr>
-                    <th>Rank</th>
-                    <th>Wallet</th>
-                    <th>Tokens</th>
-                    <th>% of Supply</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>9xA...21K</td>
-                    <td>150M</td>
-                    <td>15%</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>7KJ...8PL</td>
-                    <td>90M</td>
-                    <td>9%</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>3LM...7QP</td>
-                    <td>50M</td>
-                    <td>5%</td>
-                </tr>
+                <tr><th>Rank</th><th>Wallet</th><th>Tokens</th><th>% Dominion</th></tr>
+                <tr><td>1</td><td>9xA...21K</td><td>150M</td><td>15%</td></tr>
+                <tr><td>2</td><td>7KJ...8PL</td><td>90M</td><td>9%</td></tr>
+                <tr><td>3</td><td>3LM...7QP</td><td>50M</td><td>5%</td></tr>
             </table>
         </div>
     </section>
 
+    <script>
+        // Starfield & Blockchain Logic
+        const canvas = document.getElementById("starfield");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let stars = [];
+        for(let i=0; i<200; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*2, speed:Math.random()*0.5});
+        function animate() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "white";
+            stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill(); s.y += s.speed; if(s.y > canvas.height) s.y=0; });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Price Fetcher
+        async function fetchPrices() {
+            try {
+                const res = await fetch('https://api.dexscreener.com/latest/dex/tokens/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump');
+                const data = await res.json();
+                if(data.pairs) {
+                    const p = data.pairs[0];
+                    document.getElementById('znn-price').innerText = `$ZNN: $${parseFloat(p.priceUsd).toFixed(6)}`;
+                    document.getElementById('current-price').innerText = `Price: $${parseFloat(p.priceUsd).toFixed(6)}`;
+                    document.getElementById('market-cap').innerText = `Market Cap: $${(parseFloat(p.priceUsd) * 1000000000).toLocaleString()}`;
+                }
+            } catch(e) { console.log(e); }
+        }
+        fetchPrices(); setInterval(fetchPrices, 30000);
+
+        function connectWallet() { if(window.solana) window.solana.connect(); else alert("Install Phantom!"); }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zanon Official | $ZNN - Blockchain Universe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #1a0033 100%); color: #ffffff; font-family: 'Roboto', sans-serif; overflow-x: hidden; text-align: center; position: relative; }
+        #starfield, #blockchain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; }
+        #blockchain { z-index: -2; pointer-events: none; }
+        #grid-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(20, 241, 149, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(20, 241, 149, 0.1) 1px, transparent 1px); background-size: 50px 50px; z-index: -1; opacity: 0.3; animation: gridPulse 4s ease-in-out infinite alternate; }
+        @keyframes gridPulse { 0% { opacity: 0.2; } 100% { opacity: 0.5; } }
+        #price-ticker { position: fixed; top: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.8); border-bottom: 1px solid #14F195; z-index: 10; padding: 10px 0; overflow: hidden; white-space: nowrap; }
+        #ticker-content { display: inline-block; animation: scroll 30s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .price-item { display: inline-block; margin: 0 30px; font-family: 'Orbitron', monospace; color: #14F195; }
+        .hero { padding: 120px 20px 80px; position: relative; z-index: 1; }
+        .hero h1 { font-family: 'Orbitron', monospace; font-size: 5rem; font-weight: 900; background: linear-gradient(45deg, #14F195, #9945FF, #FF6B35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textGlow 2s ease-in-out infinite alternate; }
+        @keyframes textGlow { from { filter: drop-shadow(0 0 5px #14F195); } to { filter: drop-shadow(0 0 20px #9945FF); } }
+        .hero p { font-size: 1.5rem; margin: 10px 0 40px; color: #14F195; }
+        .buttons { margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .btn { padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; cursor: pointer; transition: all 0.4s ease; font-family: 'Orbitron', monospace; border: none; }
+        .buy { background: #14F195; color: #000; }
+        .telegram { background: #229ED9; color: #fff; }
+        .twitter { border: 2px solid #14F195; color: #14F195; background: transparent; }
+        .wallet { background: #9945FF; color: #fff; }
+        .section { max-width: 1200px; margin: auto; padding: 60px 20px; position: relative; z-index: 1; }
+        .section h2 { font-family: 'Orbitron', monospace; font-size: 2.5rem; margin-bottom: 30px; color: #14F195; }
+        .card { background: rgba(20, 20, 20, 0.9); border: 1px solid rgba(20, 241, 149, 0.2); border-radius: 20px; padding: 40px; text-align: left; line-height: 1.6; }
+        .readme-text h3 { color: #9945FF; margin: 20px 0 10px; font-family: 'Orbitron'; }
+        .readme-text ul { list-style: none; margin-bottom: 20px; }
+        .readme-text li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .readme-text li::before { content: '🚀'; position: absolute; left: 0; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .item { background: #1a1a1a; padding: 20px; border-radius: 10px; border: 1px solid #333; }
+        table { width: 100%; border-collapse: collapse; background: #111; border-radius: 10px; overflow: hidden; }
+        th { background: #9945FF; color: white; padding: 15px; }
+        td { border: 1px solid #333; padding: 12px; }
+    </style>
+</head>
+<body>
+    <div id="grid-overlay"></div>
+    <canvas id="starfield"></canvas>
+    <canvas id="blockchain"></canvas>
+
+    <div id="price-ticker">
+        <div id="ticker-content">
+            <span class="price-item" id="btc-price">BTC: $??,???</span>
+            <span class="price-item" id="eth-price">ETH: $??,???</span>
+            <span class="price-item" id="sol-price">SOL: $???</span>
+            <span class="price-item" id="znn-price">$ZNN: $0.????</span>
+        </div>
+    </div>
+
+    <section class="hero">
+        <h1>$ZNN</h1>
+        <p>THE UNSTOPPABLE GALACTIC DOMINION</p>
+        <div class="buttons">
+            <a href="https://pump.fun/coin/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump" class="btn buy" target="_blank">Buy on Pump.fun</a>
+            <a href="https://t.me/ZanonZNN" class="btn telegram" target="_blank">Join Telegram</a>
+            <a href="https://x.com/honey_sand94082" class="btn twitter" target="_blank">Follow on X</a>
+            <button class="btn wallet" onclick="connectWallet()">Connect Phantom</button>
+        </div>
+    </section>
+
     <section class="section">
-        <h2>Contra Mini Game - Earn $ZNN Points!</h2>
+        <h2>PROJECT MANIFESTO (README)</h2>
+        <div class="card readme-text">
+            <h3>🌌 OVERVIEW</h3>
+            <p>Zanon is a decentralized meme ecosystem on the Solana Network, engineered for those who seek to build a digital empire. Powered by <b>Vanguard Math Logic</b>, Zanon is more than just a token—it is a movement toward financial sovereignty.</p>
+            
+            <h3>🚀 THE ZNN ADVANTAGE</h3>
+            <ul>
+                <li><b>Extreme Velocity:</b> Lightning-fast transactions on Solana.</li>
+                <li><b>Elite Community:</b> Join the 'Zanon Warriors' army.</li>
+                <li><b>Gaming Integration:</b> Future utility within the Project X-64 ecosystem.</li>
+            </ul>
+
+            <h3>🛣️ STRATEGIC ROADMAP</h3>
+            <p><b>PHASE 1:</b> Cosmic Ignition - Launch & Community Building.<br>
+               <b>PHASE 2:</b> Nebula Expansion - Raydium Listing & Marketing.<br>
+               <b>PHASE 3:</b> Gaming Dominion - Project X-64 Integration.<br>
+               <b>PHASE 4:</b> Galactic Listing - Target: Tier-1 CEX (Binance).</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>TOKENOMICS</h2>
+        <div class="grid">
+            <div class="item">Name: Zanon</div>
+            <div class="item">Symbol: $ZNN</div>
+            <div class="item">Supply: 1,000,000,000</div>
+            <div class="item">Network: Solana</div>
+            <div id="current-price" class="item">Price: Loading...</div>
+            <div id="market-cap" class="item">Market Cap: Loading...</div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>LIVE MARKET CHART</h2>
         <div class="card">
-            <canvas id="gameCanvas" width="600" height="300"></canvas>
-            <p style="margin-top: 10px; color: #14F195;">Use Arrow Keys to Move | Collect Blocks for Points!</p>
+            <iframe src="https://dexscreener.com/solana/byrvzqqxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump?embed=1&theme=dark" width="100%" height="500" frameborder="0"></iframe>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>HOLDER LEADERBOARD</h2>
+        <div class="card">
+            <table>
+                <tr><th>Rank</th><th>Wallet</th><th>Tokens</th><th>% Dominion</th></tr>
+                <tr><td>1</td><td>9xA...21K</td><td>150M</td><td>15%</td></tr>
+                <tr><td>2</td><td>7KJ...8PL</td><td>90M</td><td>9%</td></tr>
+                <tr><td>3</td><td>3LM...7QP</td><td>50M</td><td>5%</td></tr>
+            </table>
         </div>
     </section>
 
     <script>
-        // Enhanced star background
+        // Starfield & Blockchain Logic
         const canvas = document.getElementById("starfield");
         const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let stars = [];
-        for (let i = 0; i < 300; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2 + 0.5,
-                speed: Math.random() * 0.8 + 0.2,
-                glow: Math.random() * 0.5 + 0.5
-            });
-        }
-        function animateStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-            stars.forEach(star => {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = `rgba(20, 241, 149, ${star.glow})`;
-                ctx.fill();
-                star.y += star.speed;
-                if (star.y > canvas.height) {
-                    star.y = 0;
-                    star.x = Math.random() * canvas.width;
-                }
-            });
-            requestAnimationFrame(animateStars);
-        }
-        animateStars();
-
-        // Enhanced blockchain animation with nodes and connections
-        const bcCanvas = document.getElementById("blockchain");
-        const bcCtx = bcCanvas.getContext("2d");
-        bcCanvas.width = window.innerWidth;
-        bcCanvas.height = window.innerHeight;
-        const nodes = [];
-        for (let i = 0; i < 50; i++) {
-            nodes.push({
-                x: Math.random() * bcCanvas.width,
-                y: Math.random() * bcCanvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                radius: Math.random() * 3 + 1
-            });
-        }
-        function drawBlockchain() {
-            bcCtx.clearRect(0, 0, bcCanvas.width, bcCanvas.height);
-            bcCtx.strokeStyle = 'rgba(153, 69, 255, 0.3)';
-            bcCtx.lineWidth = 1;
-            nodes.forEach((node, i) => {
-                node.x += node.vx;
-                node.y += node.vy;
-                if (node.x < 0 || node.x > bcCanvas.width) node.vx *= -1;
-                if (node.y < 0 || node.y > bcCanvas.height) node.vy *= -1;
-                bcCtx.beginPath();
-                bcCtx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-                bcCtx.stroke();
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const dist = Math.hypot(node.x - nodes[j].x, node.y - nodes[j].y);
-                    if (dist < 100) {
-                        bcCtx.beginPath();
-                        bcCtx.moveTo(node.x, node.y);
-                        bcCtx.lineTo(nodes[j].x, nodes[j].y);
-                        bcCtx.stroke();
-                    }
-                }
-            });
-            bcCtx.fillStyle = '#14F195';
-            nodes.forEach(node => {
-                bcCtx.beginPath();
-                bcCtx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-                bcCtx.fill();
-            });
-            requestAnimationFrame(drawBlockchain);
-        }
-        drawBlockchain();
-
-        // Supply counter animation
-        let count = 0;
-        let target = 1000000000;
-        let counter = setInterval(function () {
-            count += 5000000;
-            document.getElementById("supply").innerText = count.toLocaleString();
-            if (count >= target) {
-                document.getElementById("supply").innerText = "1,000,000,000";
-                clearInterval(counter);
-            }
-        }, 10);
-
-        // Phantom wallet connection
-        function connectWallet() {
-            if (window.solana && window.solana.isPhantom) {
-                window.solana.connect().then(() => {
-                    alert("Phantom Wallet Connected Successfully!");
-                }).catch(() => {
-                    alert("Failed to connect Phantom Wallet");
-                });
-            } else {
-                alert("Please install Phantom Wallet extension!");
-            }
-        }
-
-        // Enhanced 3D coin with rotation and glow
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true });
-        renderer.setSize(250, 250);
-        document.getElementById("coin3d").appendChild(renderer.domElement);
-        const geometry = new THREE.CylinderGeometry(3, 3, 0.5, 32);
-        const material = new THREE.MeshBasicMaterial({ color: 0x14F195, wireframe: true });
-        const coin = new THREE.Mesh(geometry, material);
-        scene.add(coin);
-        camera.position.z = 6;
+        for(let i=0; i<200; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*2, speed:Math.random()*0.5});
         function animate() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "white";
+            stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill(); s.y += s.speed; if(s.y > canvas.height) s.y=0; });
             requestAnimationFrame(animate);
-            coin.rotation.y += 0.03;
-            coin.rotation.x += 0.01;
-            renderer.render(scene, camera);
         }
         animate();
 
-        // Real-time price fetching using CoinGecko API
+        // Price Fetcher
         async function fetchPrices() {
             try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true');
-                const data = await response.json();
-                document.getElementById('btc-price').innerHTML = `BTC: \[ {data.bitcoin.usd.toLocaleString()} <span class="\( {data.bitcoin.usd_24h_change > 0 ? 'positive' : 'negative'}"> \){data.bitcoin.usd_24h_change > 0 ? '+' : ''}${data.bitcoin.usd_24h_change.toFixed(2)}%</span> | `;
-                document.getElementById('eth-price').innerHTML = `ETH: \]{data.ethereum.usd.toLocaleString()} <span class="\( {data.ethereum.usd_24h_change > 0 ? 'positive' : 'negative'}"> \){data.ethereum.usd_24h_change > 0 ? '+' : ''}${data.ethereum.usd_24h_change.toFixed(2)}%</span> | `;
-                document.getElementById('sol-price').innerHTML = `SOL: \[ {data.solana.usd.toLocaleString()} <span class="\( {data.solana.usd_24h_change > 0 ? 'positive' : 'negative'}"> \){data.solana.usd_24h_change > 0 ? '+' : ''}${data.solana.usd_24h_change.toFixed(2)}%</span> | `;
-            } catch (error) {
-                console.error('Error fetching prices:', error);
-            }
-
-            // For $ZNN, use a placeholder or integrate Birdeye API if needed; here using Dexscreener-like fetch
-            try {
-                const znnResponse = await fetch('https://api.dexscreener.com/latest/dex/tokens/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump');
-                const znnData = await znnResponse.json();
-                if (znnData.pairs && znnData.pairs[0]) {
-                    const pair = znnData.pairs[0];
-                    document.getElementById('znn-price').innerHTML = `\( ZNN: \]{pair.priceUsd} <span class=" \){pair.priceChange.h24 > 0 ? 'positive' : 'negative'}">\( {pair.priceChange.h24 > 0 ? '+' : ''} \){pair.priceChange.h24.toFixed(2)}%</span> | `;
-                    document.getElementById('current-price').innerHTML = `Price: \[ {pair.priceUsd}`;
-                    const supply = 1000000000;
-                    const mc = parseFloat(pair.priceUsd) * supply;
-                    document.getElementById('market-cap').innerHTML = `Market Cap: \]{mc.toLocaleString()}`;
+                const res = await fetch('https://api.dexscreener.com/latest/dex/tokens/ByRVZqQxsZ34MX8Uy7dUwt1V6PBjefNegd84CjgCpump');
+                const data = await res.json();
+                if(data.pairs) {
+                    const p = data.pairs[0];
+                    document.getElementById('znn-price').innerText = `$ZNN: $${parseFloat(p.priceUsd).toFixed(6)}`;
+                    document.getElementById('current-price').innerText = `Price: $${parseFloat(p.priceUsd).toFixed(6)}`;
+                    document.getElementById('market-cap').innerText = `Market Cap: $${(parseFloat(p.priceUsd) * 1000000000).toLocaleString()}`;
                 }
-            } catch (error) {
-                console.error('Error fetching $ZNN data:', error);
-                document.getElementById('znn-price').innerHTML = `$ZNN: Loading... | `;
-            }
+            } catch(e) { console.log(e); }
         }
-        fetchPrices();
-        setInterval(fetchPrices, 30000); // Update every 30 seconds
+        fetchPrices(); setInterval(fetchPrices, 30000);
 
-        // Enhanced mini Contra game
-        const game = document.getElementById("gameCanvas");
-        const g = game.getContext("2d");
-        let playerX = 50;
-        let playerY = 250;
-        let score = 0;
-        let blocks = [{x: 100, y: 200}, {x: 200, y: 180}, {x: 300, y: 220}];
-        document.addEventListener("keydown", e => {
-            if (e.key === "ArrowRight" && playerX < 580) playerX += 10;
-            if (e.key === "ArrowLeft" && playerX > 0) playerX -= 10;
-        });
-        function loop() {
-            g.clearRect(0, 0, 600, 300);
-            // Ground
-            g.fillStyle = "#333";
-            g.fillRect(0, 280, 600, 20);
-            // Player
-            g.fillStyle = "#14F195";
-            g.fillRect(playerX, playerY, 20, 20);
-            // Blocks
-            blocks.forEach((block, i) => {
-                g.fillStyle = "#9945FF";
-                g.fillRect(block.x, block.y, 15, 15);
-                // Collision
-                if (playerX < block.x + 15 && playerX + 20 > block.x && playerY < block.y + 15 && playerY + 20 > block.y) {
-                    score += 10;
-                    blocks.splice(i, 1);
-                    blocks.push({x: Math.random() * 500 + 50, y: Math.random() * 100 + 150});
-                }
-            });
-            // Score
-            g.fillStyle = "white";
-            g.font = "20px Orbitron";
-            g.fillText(`Score: ${score}`, 10, 30);
-            requestAnimationFrame(loop);
-        }
-        loop();
+        function connectWallet() { if(window.solana) window.solana.connect(); else alert("Install Phantom!"); }
     </script>
 </body>
 </html>
+
