@@ -1,275 +1,111 @@
-<!DOCTYPE html>
-<html lang="hi">
+<!DOCTYPE html><html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zanon (ZNN) Trading Terminal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <style>
-        :root {
-            --bg-dark: #0a0c10;
-            --card-bg: rgba(25, 30, 40, 0.92);
-            --primary-green: #00ff9d;
-            --primary-red: #ff3b5c;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZNN Trading Terminal</title><script src="https://cdn.tailwindcss.com"></script><script src="https://s3.tradingview.com/tv.js"></script><style>
+body{
+background:#0b0f1a;
+color:white;
+font-family:Arial;
+}
 
-        * { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.glass{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.1);
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0c10 0%, #1a1f2e 100%);
-            color: white;
-            margin: 0;
-            min-height: 100vh;
-        }
+.buy{
+background:linear-gradient(90deg,#00ff9d,#00cc7a);
+}
 
-        .header {
-            background: rgba(15, 20, 30, 0.98);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 255, 157, 0.15);
-        }
+.sell{
+background:linear-gradient(90deg,#ff3b5c,#e62e4d);
+}
 
-        .price-banner {
-            font-size: 2.75rem;
-            font-weight: 700;
-            text-shadow: 0 0 40px #00ff9d;
-            animation: pricePulse 2.8s ease-in-out infinite;
-        }
+</style></head><body class="p-6"><!-- Header --><div class="glass p-6 rounded-2xl flex justify-between items-center mb-6"><div>
+<h1 class="text-3xl font-bold">ZANON (ZNN)</h1>
+<div class="text-green-400">Live Trading</div>
+</div><div class="text-2xl font-bold">
+$ <span id="price">0.348</span>
+</div><div class="flex gap-3"><button onclick="buyZNN()" class="buy px-4 py-2 rounded-xl font-bold text-black">
+Buy
+</button><button onclick="sellZNN()" class="sell px-4 py-2 rounded-xl font-bold">
+Sell
+</button><button onclick="help()" class="bg-blue-500 px-4 py-2 rounded-xl">
+Help
+</button></div></div><!-- Chart --><div class="glass p-4 rounded-2xl mb-6">
+<div id="chart" style="height:400px"></div>
+</div><!-- Trading Box --><div class="glass p-6 rounded-2xl"><h2 class="text-xl mb-4">Trade ZNN</h2><input id="amount" type="number" placeholder="Amount"
+class="w-full p-4 rounded-xl bg-black mb-4">
 
-        @keyframes pricePulse {
-            0%, 100% { text-shadow: 0 0 40px #00ff9d; }
-            50% { text-shadow: 0 0 60px #00ff9d, 0 0 80px #00cc7a; }
-        }
+<div class="text-lg mb-4">
+Total: $ <span id="total">0</span>
+</div><div class="grid grid-cols-2 gap-4"><button onclick="placeOrder('buy')"
+class="buy p-4 rounded-xl font-bold text-black"> BUY ZNN </button>
 
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
+<button onclick="placeOrder('sell')"
+class="sell p-4 rounded-xl font-bold"> SELL ZNN </button>
 
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(to right, #00ff9d, #00cc7a);
-            box-shadow: 0 0 15px #00ff9d;
-        }
+</div></div><!-- Order Book --><div class="glass p-6 rounded-2xl mt-6"><h2 class="text-xl mb-4">Order Book</h2><div id="orders"></div></div><script>
 
-        .neon-buy { background: linear-gradient(90deg, #00ff9d, #00e68a); box-shadow: 0 0 30px rgba(0,255,157,0.6); }
-        .neon-sell { background: linear-gradient(90deg, #ff3b5c, #e62e4d); box-shadow: 0 0 30px rgba(255,59,92,0.6); }
+let price = 0.348;
 
-        .order-row:hover {
-            background: rgba(255,255,255,0.07);
-            transform: translateX(6px);
-        }
+setInterval(()=>{
 
-        .toast {
-            animation: slideUp 0.4s ease forwards;
-        }
+price = price + (Math.random()-0.5)/100;
 
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-    </style>
-</head>
-<body class="flex flex-col items-center">
+document.getElementById("price").innerText = price.toFixed(4);
 
-    <!-- Header -->
-    <header class="header w-full py-6 px-8 flex justify-between items-center">
-        <div class="flex items-center gap-4">
-            <h1 class="text-4xl font-bold tracking-tighter">ZANON <span class="text-[#00ff9d]">ZNN</span></h1>
-            <span class="px-4 py-1 text-xs bg-emerald-500/20 text-emerald-400 rounded-3xl border border-emerald-500/40">LIVE MAINNET</span>
-        </div>
+calculate();
 
-        <div class="price-banner flex items-baseline gap-4">
-            ZNN/USDT 
-            <span id="live-price" class="text-[#00ff9d]">0.00000000</span>
-            <span id="price-change" class="text-sm font-medium"></span>
-        </div>
+},2000);
 
-        <div class="flex items-center gap-8 text-sm">
-            <div>
-                Balance: <span class="font-semibold text-[#ffd700]">1,248.45 ZNN</span>
-            </div>
-            <button onclick="connectWallet()" 
-                    class="px-7 py-3 bg-white/10 hover:bg-white/20 border border-white/30 rounded-2xl font-medium">
-                Connect Wallet
-            </button>
-        </div>
-    </header>
 
-    <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 w-full max-w-7xl px-6 py-10">
+function calculate(){
 
-        <!-- Chart + Trade -->
-        <div class="xl:col-span-8 space-y-6">
-            <!-- TradingView Chart -->
-            <div class="glass-card rounded-3xl p-3 h-[520px]">
-                <div id="tradingview-chart" class="w-full h-full rounded-2xl overflow-hidden"></div>
-            </div>
+let amt = document.getElementById("amount").value;
 
-            <!-- Trade Panel -->
-            <div class="glass-card rounded-3xl p-8">
-                <div class="flex border-b border-white/10 mb-8">
-                    <button onclick="switchTab(0)" id="tab-buy" 
-                            class="tab-btn active flex-1 py-5 text-2xl font-semibold">BUY ZNN</button>
-                    <button onclick="switchTab(1)" id="tab-sell" 
-                            class="tab-btn flex-1 py-5 text-2xl font-semibold">SELL ZNN</button>
-                </div>
+let total = amt * price;
 
-                <div class="space-y-8">
-                    <div>
-                        <label class="block text-gray-400 mb-3">Amount (ZNN)</label>
-                        <input id="amount" type="number" step="0.0001" 
-                               class="w-full bg-black/60 border border-white/20 rounded-3xl px-8 py-7 text-4xl focus:border-[#00ff9d] focus:outline-none"
-                               placeholder="0.0000" oninput="calculateTotal()">
-                    </div>
+if(!total) total=0;
 
-                    <div>
-                        <label class="block text-gray-400 mb-3">Total (USDT)</label>
-                        <div id="total" class="text-5xl font-semibold text-white">0.00</div>
-                    </div>
 
-                    <div class="grid grid-cols-2 gap-6 pt-6">
-                        <button onclick="placeOrder('buy')" 
-                                class="neon-buy text-black py-8 rounded-3xl text-2xl font-bold hover:scale-105">BUY ZNN</button>
-                        <button onclick="placeOrder('sell')" 
-                                class="neon-sell py-8 rounded-3xl text-2xl font-bold hover:scale-105">SELL ZNN</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+document.getElementById("total").innerText = total.toFixed(4);
 
-        <!-- Sidebar -->
-        <div class="xl:col-span-4 space-y-6">
-            <!-- Order Book -->
-            <div class="glass-card rounded-3xl p-7">
-                <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
-                    📊 Order Book
-                </h3>
-                <div id="order-book" class="text-sm"></div>
-            </div>
+}
 
-            <!-- Recent Trades -->
-            <div class="glass-card rounded-3xl p-7">
-                <h3 class="text-xl font-semibold mb-5">Recent Trades</h3>
-                <div id="recent-trades" class="space-y-5 text-sm"></div>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        let currentPrice = 0.348;
+document.getElementById("amount").addEventListener("input",calculate);
 
-        function updateLivePrice() {
-            const change = (Math.random() * 1.2 - 0.6).toFixed(2);
-            currentPrice = parseFloat((currentPrice + parseFloat(change)/100).toFixed(6));
-            
-            document.getElementById('live-price').textContent = currentPrice.toFixed(6);
-            const changeEl = document.getElementById('price-change');
-            changeEl.textContent = change + "%";
-            changeEl.className = parseFloat(change) >= 0 ? "text-emerald-400" : "text-red-400";
-        }
-        setInterval(updateLivePrice, 1800);
 
-        // TradingView Chart
-        function initChart() {
-            new TradingView.widget({
-                "width": "100%",
-                "height": "100%",
-                "symbol": "UNISWAP:ZNNWETH",   // Closest real pair
-                "interval": "5",
-                "timezone": "Asia/Kolkata",
-                "theme": "dark",
-                "style": "1",
-                "locale": "en",
-                "toolbar_bg": "#0a0c10",
-                "enable_publishing": false,
-                "allow_symbol_change": true,
-                "container_id": "tradingview-chart"
-            });
-        }
+function placeOrder(type){
 
-        function switchTab(n) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(n === 0 ? 'tab-buy' : 'tab-sell').classList.add('active');
-        }
+alert(type.toUpperCase()+" Order Placed");
 
-        function calculateTotal() {
-            const amt = parseFloat(document.getElementById('amount').value) || 0;
-            document.getElementById('total').textContent = (amt * currentPrice).toFixed(4);
-        }
+}
 
-        function placeOrder(type) {
-            const amt = document.getElementById('amount').value;
-            if (!amt || amt <= 0) {
-                alert("कृपया सही अमाउंट डालें");
-                return;
-            }
 
-            const msg = type === 'buy' 
-                ? `✅ ${amt} ZNN का BUY ऑर्डर सफलतापूर्वक प्लेस हो गया!` 
-                : `✅ ${amt} ZNN का SELL ऑर्डर सफलतापूर्वक प्लेस हो गया!`;
+function buyZNN(){
 
-            const toast = document.createElement('div');
-            toast.className = `fixed bottom-10 right-10 px-8 py-5 rounded-3xl font-semibold text-black shadow-2xl toast`;
-            toast.style.background = type === 'buy' ? '#00ff9d' : '#ff3b5c';
-            toast.textContent = msg;
-            document.body.appendChild(toast);
+window.open("https://pancakeswap.finance","_blank");
 
-            setTimeout(() => toast.remove(), 3200);
+}
 
-            document.getElementById('amount').value = '';
-            document.getElementById('total').textContent = '0.00';
-        }
+function sellZNN(){
 
-        function connectWallet() {
-            alert("🦊 Wallet Connected Successfully! (Demo)");
-        }
+window.open("https://pancakeswap.finance","_blank");
 
-        // Fake Order Book & Trades
-        function renderOrderBook() {
-            document.getElementById('order-book').innerHTML = `
-                <div class="text-red-400 text-xs mb-3">SELL</div>
-                <div class="order-row grid grid-cols-3 py-3 px-4 rounded-2xl">
-                    <div>0.3521</div><div class="text-right">45.2</div><div class="text-right text-red-400">15.92</div>
-                </div>
-                <div class="order-row grid grid-cols-3 py-3 px-4 rounded-2xl">
-                    <div>0.3518</div><div class="text-right">32.8</div><div class="text-right text-red-400">11.54</div>
-                </div>
-                <div class="my-6 text-center text-xs text-gray-500">Spread: 0.0004 (${(0.0004/currentPrice*100).toFixed(2)}%)</div>
-                <div class="text-emerald-400 text-xs mb-3">BUY</div>
-                <div class="order-row grid grid-cols-3 py-3 px-4 rounded-2xl">
-                    <div>0.3470</div><div class="text-right">68.5</div><div class="text-right text-emerald-400">23.78</div>
-                </div>
-                <div class="order-row grid grid-cols-3 py-3 px-4 rounded-2xl">
-                    <div>0.3465</div><div class="text-right">51.3</div><div class="text-right text-emerald-400">17.78</div>
-                </div>
-            `;
-        }
+}
 
-        function renderRecentTrades() {
-            document.getElementById('recent-trades').innerHTML = `
-                <div class="flex justify-between"><span class="text-emerald-400">+0.3482</span><span class="text-gray-400 text-xs">just now</span></div>
-                <div class="flex justify-between"><span class="text-red-400">-0.3479</span><span class="text-gray-400 text-xs">3s ago</span></div>
-                <div class="flex justify-between"><span class="text-emerald-400">+0.3485</span><span class="text-gray-400 text-xs">7s ago</span></div>
-            `;
-        }
+function help(){
 
-        // Initialize
-        window.onload = () => {
-            initChart();
-            renderOrderBook();
-            renderRecentTrades();
-            updateLivePrice();
-            setInterval(renderOrderBook, 5000);
-        };
-    </script>
-</body>
-</html>
+alert("Buy → Wallet Connect → Confirm");
+
+}
+
+
+
+new TradingView.widget({
+"width": "100%",
+"height": 400
